@@ -1,0 +1,26 @@
+[book]
+authors = ["Christoph Dalski"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Azure Trainings"
+
+[output.html]
+additional-css = ["src/css/custom.css"]
+default-theme = "rust"
+preferred-dark-theme = "navy"
+git-repository-url = "https://github.com/chdalski/azure-training/tree/main"
+git-repository-icon = "fa-github"
+edit-url-template = "https://github.com/chdalski/azure-training/edit/main/{path}"
+
+[output.html.playground]
+runnable = false
+
+[output.html.search]
+limit-results = 20
+use-boolean-and = true
+boost-title = 2
+boost-hierarchy = 2
+boost-paragraph = 1
+expand = true
+heading-split-level = 2
