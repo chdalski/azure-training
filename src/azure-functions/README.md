@@ -1,6 +1,6 @@
 # Azure Functions
 
-## What you can and can't expect
+## What you can and can not expect
 
 This training is designed to give you a fundamental understanding of _Azure Functions_, how they work and what you can do with it as well as some best practices for developers.
 

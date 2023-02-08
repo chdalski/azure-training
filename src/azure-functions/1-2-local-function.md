@@ -2,11 +2,11 @@
 
 ## Introduction
 
-In this chapter we will create a local function, look at it's details and then start and call it.
+In this chapter we will create a local function, look at its details and then start and call it.
 
 Make sure you have created a [Local Function App](./21-local-function-app.md).
 
-Commands in this chapter are to be executed in the _Function App_ root directory if not stated otherwise.
+Commands in this chapter are to be executed in the _Function App_ root directory unless stated otherwise.
 
 ## Add a function to our Function App
 
@@ -15,12 +15,12 @@ A function is the primary concept in Azure Functions.
 A function contains two important pieces:
 
 - your code, which can be written in a variety of languages
-- it's config file called _function.json_
+- its config file called _function.json_
 
 For scripting languages, you must provide the config file yourself.
 For compiled languages, the config file is generated automatically from annotations in your code.
 
-We can add a new one to our _Function App_ with the Azure Functions Core Tools - take a look at the [command reference](https://learn.microsoft.com/en-us/azure/azure-functions/functions-core-tools-reference) for insights on the parameters:
+We can add a new one to our _Function App_ with the Azure Functions Core Tools – take a look at the [command reference](https://learn.microsoft.com/en-us/azure/azure-functions/functions-core-tools-reference) for insights on the parameters:
 
 ```shell
 func new --name greetings --authlevel anonymous --template "HTTP Trigger"
@@ -29,10 +29,10 @@ func new --name greetings --authlevel anonymous --template "HTTP Trigger"
 That's it!
 We've successfully added a new function 🎉!
 
-When listing the files in our _Function App_ root directory you'll see a new directory, named like our function ("greetings"), which contains all the files for the function itself.
-So if you want to delete a function it's enough to remove the directory.
+When listing the files in our _Function App_ root directory, you'll see a new directory, named like our function ("greetings"), which contains all the files for the function itself.
+So if you want to delete a function, it's enough to remove the directory.
 
-> Note: We won't get into the details of different authorization levels yet. For now use _anonymous_ when you add new functions.
+> Note: We won't go into the details of different authorization levels yet. For now use _anonymous_ when you add new functions.
 
 ### The _function.json_
 
@@ -42,14 +42,14 @@ The runtime uses this config file to determine the events to monitor and how to 
 #### Triggers
 
 [Triggers](https://learn.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings) cause a function to run.
-It defines how a function is invoked and a function must have exactly one trigger.
+They define how a function is invoked and a function must have exactly one trigger.
 Triggers have associated data, which is often provided as the payload of the function.
 
 In our case we created an HTTP Trigger, so our function is triggered via HTTP requests.
 
 #### Bindings
 
-[Binding](https://learn.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings) to a function is a way of declaratively connecting another resource to the function.
+[Binding](https://learn.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings) to a function are a way of declaratively connecting another resource to the function.
 Bindings may be connected as input bindings, output bindings, or both.
 Data from bindings is provided to the function as parameters.
 
@@ -92,7 +92,7 @@ Browsing the contents of our _function.json_ file reveals we currently have two 
 The _index.ts_ was created for us from the HTTP Trigger template we specified when adding the new function.
 It contains a sample function implementation with which we'll play around in a moment.
 
-But first take a closer look to the constant called httpTrigger:
+But first take a closer look at the constant called httpTrigger:
 
 ```typescript
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {...}
@@ -101,14 +101,14 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
 There are some noteworthy things here:
 
 First, the function is asynchronous.
-Review the language specific details if that has implications for you (i. e. [TypeScript](https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-node#contextdone-method) or [Python](https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python#async))
+Review the language-specific details if that has any implications for you (i. e. [TypeScript](https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-node#contextdone-method) or [Python](https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python#async))
 
 Second, the function expects two parameters:
 
-- The first one (`context`) is language specific, but other languages have equivalents for it. It's passed to every function and is used for receiving and sending binding data, logging, and communicating with the runtime.
+- The first one (`context`) is language-specific, but other languages have equivalents for it. It's passed to every function and is used for receiving and sending binding data, logging, and communicating with the runtime.
   - The structure of the context object **depends on** the selected trigger and bindings.
 - The second one (`req`) is the http request object.
-  - The name of the request object **must match** with the name defined for the input binding in your `function.json`
+  - The name of the request object **must match** the name defined for the input binding in your `function.json`
 
 ## Start the function
 
@@ -118,9 +118,9 @@ Now we can finally start our new function with:
 npx tsc && func start
 ```
 
-The command triggers the typescript compiler and starts the function afterwards.
+The command triggers the TypeScript compiler and starts the function afterwards.
 
-The output contains details on the Core Tools version and the runtime version, but more importantly we get an overview over the functions we provide, their url and the accepted http methods.
+The output contains details on the Core Tools version and the runtime version, but more importantly we get an overview over the functions we provide, their URL and the accepted http methods.
 
 <details>
   <summary>Sample output</summary>
@@ -142,7 +142,7 @@ For detailed output, run func with --verbose flag.
 
 ### Shutdown the function
 
-To shutdown your Function App press `ctrl+c`.
+To shutdown your Function App, press `ctrl+c`.
 
 ### Verbose flag
 
@@ -181,7 +181,7 @@ Every function has it's dedicated settings file called _function.json_.
 </details>
 <br/>
 <details>
-  <summary>What error code does the Function sent if you called it with an unspecified http method?</summary>
+  <summary>What error code does the Function send if you called it with an unspecified http method?</summary>
 
 It responds with [404 Not Found](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404).
 
@@ -208,7 +208,7 @@ curl -X OPTION http://localhost:7071/api/greetings -v
 </details>
 <br/>
 <details>
-  <summary>Are there function bindings for Kafka? If so, for which runtime version and are in or out bindings or both supported?</summary>
+  <summary>Are there function bindings for Kafka? If so, which runtime version is supported? Are in, out or both binding types supported?</summary>
 
 Take a look at the [documentation](https://learn.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings#supported-bindings).
 

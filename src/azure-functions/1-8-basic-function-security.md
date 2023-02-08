@@ -4,17 +4,17 @@
 
 The aim of this chapter is to give you an understanding of the most fundamental security mechanisms of Azure Functions, or more specific, on how to use [Function Access Keys](https://learn.microsoft.com/en-us/azure/azure-functions/security-concepts#function-access-keys).
 
-Azure Function security in general is a much broader topic, which we can't possibly explain in it's entirety in this training.
-That said, I strongly encourage you to read the whole documentation of Azure Functions [security concepts](https://learn.microsoft.com/en-us/azure/azure-functions/security-concepts), after completing this chapter.
+Azure Function security in general is a much broader topic, which we can't possibly explain in its entirety in this training.
+That said, I strongly encourage you to read the whole documentation of Azure Functions [security concepts](https://learn.microsoft.com/en-us/azure/azure-functions/security-concepts) after completing this chapter.
 
-Commands in this chapter are to be executed in the _Function App_ root directory if not stated otherwise.
+Commands in this chapter are to be executed in the _Function App_ root directory unless stated otherwise.
 
 ## Function Access Keys
 
-As the name implies, Function Access Keys can be used to secure your functions in a manner, were your requests must include an API access key in the request.
+As the name implies, Function Access Keys can be used to secure your functions in a manner where your requests must include an API access key in the request.
 Unless the HTTP access level on an HTTP triggered function is set to anonymous, that is.
 
-They're good enough for trainings, demos, or development purpose but shouldn't be used in [production](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger#secure-an-http-endpoint-in-production).
+They're good enough for trainings, demos, or development purposes but shouldn't be used in [production](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger#secure-an-http-endpoint-in-production).
 
 Nevertheless they are the default security mechanisms Azure Functions provide and that's why we're learning about them.
 In fact, we already used Function Access keys back in [Chapter 2.5](./25-working-with-app-settings.md#use-app-settings-in-functions), were we created a function with authorization level `function`, and they're also the reason why we created most of our functions with authorization level `anonymous`.
@@ -61,7 +61,7 @@ az functionapp keys list --resource-group rg-functions-demo --name <APP_NAME>
 
 As you can see, there's only one function key and the master key so far.
 
-## Call functions using keys
+## Calling functions using keys
 
 Let's call our `settings` function with using anonymous and the different keys.
 
@@ -77,7 +77,7 @@ Using a key:
 curl 'https://<APP_NAME>.azurewebsites.net/api/settings?code=<KEY>'
 ```
 
-Using a anonymous call the function response is `401 Unauthorized`, whereas it works as expected if we provide the key.
+Using a anonymous call, the function response is `401 Unauthorized`, whereas it works as expected if we provide the key.
 
 ### <span class="task">🛠 TASK (optional):</span> Verify the admin key access
 
@@ -116,7 +116,7 @@ Summary: The function key, doesn't work anymore, whereas the admin key works as 
 
 </details>
 
-## Function specific keys
+## Function-specific keys
 
 So far, we've used a host key or the admin key, where both can access all APIs of our Function App.
 But, as we've learned above, we can also create keys for specific functions.
@@ -144,12 +144,12 @@ Output (snippet):
 
 </details>
 
-If we list our keys again, we won't find the key we just created, because it's function specific.
+If we list our keys again, we won't find the key we just created, because it's function-specific.
 
 We need to use the function specific [command](https://learn.microsoft.com/en-us/cli/azure/functionapp/function/keys#az-functionapp-function-keys-list) to list the keys for a function.
 
 ```shell
-az functionapp function keys list --resource-group rg-functions-demo --function-name greetings --name fa-training-demo-wm7e2grlkzscg
+az functionapp function keys list --resource-group rg-functions-demo --function-name greetings --name <APP_NAME>
 ```
 
 > Note: We use `az functionapp keys list ...` for the Function App, but `az functionapp function keys list ...` for a specific function.
@@ -161,14 +161,16 @@ This task contains of three easy questions.
 
 1. Using the function key, we just created, can you access the `greetings` function with it?
 2. Using the function key, we just created, can you access the `settings` function with it?
-3. Can you still access the `greetings` function with the function key, if you set it's authorization level to `admin`?
+3. Can you still access the `greetings` function with the function key if you set its authorization level to `admin`?
 
 <details>
   <summary>🎓 SOLUTION</summary>
 
-**Question 1**: Calling the greetings function with the key it works as expected and results in a 200 OK. The function should be anonymous right now, so it doesn't care about the key at all.
+**Question 1**: Calling the greetings function with the key it works as expected and results in a 200 OK.
+The function should be anonymous right now, so it doesn't care about the key at all.
 
-**Question 2**: As one would expect it results in 401 Unauthorized. Again nothing unexpected, because the key is not valid for the settings function.
+**Question 2**: As one would expect it results in 401 Unauthorized.
+Again nothing unexpected because the key is not valid for the settings function.
 
 **Question 3**: This results in 401 Unauthorized because a function with authorization level admin can only be called using the master key.
 

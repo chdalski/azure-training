@@ -8,22 +8,22 @@ In the last chapter we were already using Azure Monitor metrics to query informa
 
 In this chapter, we're going to focus solely on the basics of _Streaming Logs_, which come in two flavours:
 
-- **Built-in log streaming** lets you view a stream of your _application log_ files. This stream is equivalent to the output seen when you debug your functions during local development. This streaming method supports only a single instance, and can't be used with an app running on Linux in a Consumption plan.
-- **Live Metrics streaming** lets you view log data and other metrics in near real time, when your Function App is connected to Application Insights.
+- **Built-in log streaming** lets you view a stream of your _application log_ files. This stream is equivalent to the output seen when you debug your functions during local development. This streaming method supports only a single instance and can't be used with an app running on Linux in a Consumption plan.
+- **Live Metrics streaming** lets you view log data and other metrics in near real time when your Function App is connected to Application Insights.
 
 We're also going to look into how to run only specific functions, disabling functions and so on.
 
-Commands in this chapter are to be executed in the _Function App_ root directory if not stated otherwise.
+Commands in this chapter are to be executed in the _Function App_ root directory unless stated otherwise.
 
 ## Look under the hood
 
-Before we take a look at the logs we take a little detour and talk a little about trace levels and log levels, learn the difference and write a little function to write some logs.
+Before we take a look at the logs, we take a little detour and talk a little about trace levels and log levels, learn the difference and write a little function to write some logs.
 
-### Trace Levels
+### Trace levels
 
 _Trace levels_ define what kind of message we send to our logs stream.
 
-One of the reasons, why we're focusing solely on the basics of streaming logs, is because trace levels in Azure Functions depend on your [language of choice](https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#writing-to-logs).
+One of the reasons why we're focusing solely on the basics of streaming logs is because trace levels in Azure Functions depend on your [language of choice](https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#writing-to-logs).
 
 Nevertheless, the following four basic levels are available in most languages:
 
@@ -32,7 +32,7 @@ Nevertheless, the following four basic levels are available in most languages:
 3. **Error**: should be used when the function hits an issue preventing one or more functionalities from properly executing
 4. **Trace / Verbose**: should be used for events considered to be useful during software debugging when more granular information is needed
 
-In [Typescript and Javascript](https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-node#trace-levels) we can access the logger via the context as shown in the table below.
+In [Typescript / Javascript](https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-node#trace-levels) we can access the logger via the context as shown in the table below.
 
 | Trace Level | Write with                                            |
 | :---------- | :---------------------------------------------------- |
@@ -50,12 +50,12 @@ We've already used `context.log` and if you took a closer look to the logs from 
 
 [Log levels](https://learn.microsoft.com/en-us/azure/azure-functions/configure-monitoring#configure-log-levels) define what kind of messages we want to capture in our logs.
 
-While there are only four _trace levels_ (language specific) there are seven _log levels_.
-That's because the _trace levels_ are language specific, whereas the _log levels_ are runtime specific.
-The Function App runtime is written in .NET which knows all seven levels as well for logs as for traces.
+While there are only four _trace levels_, there are seven _log levels_.
+That's because the _trace levels_ are language-specific, whereas the _log levels_ are runtime-specific.
+The Function App runtime is written in .NET, which knows all seven levels for logs and traces.
 
 The six log levels are _Trace_, _Debug_, _Information_, _Warning_, _Error_, _Critical_, _None_, whereas _Trace_ is the highest level and _None_, of course, the lowest.
-The level you choose includes all lower levels, except for _None_ which is used to deactivate logging at all.
+The level you choose includes all lower levels, except for _None_ which will deactivate logging completely.
 So, if you choose _Warning_, for example, you would also include _Error_ and _Critical_ log messages.
 
 Log levels can be configured for different [categories](https://learn.microsoft.com/en-us/azure/azure-functions/configure-monitoring#configure-categories).
@@ -66,7 +66,7 @@ The log levels can be configured in the _host.json_, so on the scale of the whol
 Nevertheless, we can specify the _log level_ per function and will do so in a later task.
 
 <details>
-  <summary>Sample host.json</summary>
+  <summary>Sample <span class="italic">host.json</span></summary>
 
 ```json
 {
@@ -94,7 +94,7 @@ Nevertheless, we can specify the _log level_ per function and will do so in a la
 
 </details>
 
-As already mentioned, log levels are runtime specific, so changing the log level (for functions) will impact all your functions.
+As already mentioned, log levels are runtime-specific, so changing the log level (for functions) will impact all your functions.
 We'll learn how to work around that later in this chapter.
 
 Let's add the _log levels_ to the table
@@ -106,14 +106,14 @@ Let's add the _log levels_ to the table
 | Error       | `context.log.error(message)`                          | Error       |
 | Verbose     | `context.log.verbose(message)`                        | Trace       |
 
-The only surprise here is that _Verbose_ correlates to _Trace_ not to _Debug_ as one might have expected.
+The only surprise here is that _Verbose_ correlates to _Trace_, not to _Debug_ as one might have expected.
 
 > Note: The _host.json_ is included when deploying the Function App, so remember to reset your settings before you deploy it.
-> Or, as we do later in this chapter overwrite the _host.json_ settings in your _local.settings.json_ like described [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json#override-hostjson-values).
+> Or, as we do later in this chapter, overwrite the _host.json_ settings in your _local.settings.json_ as described [here](https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json#override-hostjson-values).
 
-## Create a log function
+## Creating a log function
 
-Now, we want to add a function the just write some logs once in a while.
+Now, we want to add a function which automatically writes log data once in a while.
 
 ### <span class="task">🛠 TASK:</span> Create a Timer Trigger function
 
@@ -123,7 +123,7 @@ But this time we'll create a [Timer Trigger](https://learn.microsoft.com/en-us/a
 A _Timer Trigger_ is triggered at scheduled times.
 The schedule is defined via a [Cron Expressions](https://en.wikipedia.org/wiki/Cron#Cron_expression) and the expression is configured in the _function.json_.
 
-If you need a verbal interpretation of a cron expression you can use a [cron expression generator](https://crontab.cronhub.io/) website.
+If you need a verbal interpretation of a cron expression, you can use a [cron expression generator](https://crontab.cronhub.io/) website.
 
 <details>
   <summary>Sample function.json</summary>
@@ -188,7 +188,7 @@ const timerTrigger: AzureFunction = async function (
 
 The task is to start the Function App, but let it run the _logs_ function only.
 
-There're two possibilities to do so, you could either [disable](https://learn.microsoft.com/en-us/azure/azure-functions/disable-function#localsettingsjson) all other functions in the _local.settings.json_, or you could defines with [functions to run](https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json#functions) in the _host.json_.
+There're two possibilities to do so, you could either [disable](https://learn.microsoft.com/en-us/azure/azure-functions/disable-function#localsettingsjson) all other functions in the _local.settings.json_, or you could define which functions [to run](https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json#functions) in the _host.json_.
 So it's either a [denylist](https://en.wikipedia.org/wiki/Whitelist) or an [allowlist](<https://en.wikipedia.org/wiki/Blacklist_(computing)>).
 
 We want to use a allowlist, but we want to run just some local tests.
@@ -198,7 +198,7 @@ Therefore, we need a possibility to [overwrite](https://learn.microsoft.com/en-u
 Check out the [documentation](https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json) and create an allowlist, including only the _logs_ function.
 
 Start the function, after changing the settings, to see the log messages.
-Depending on how patient, or rather how impatient you are you might also want to update the cron schedule to run the function more often, or take a little break.
+Depending on how patient, or rather how impatient you are, you might also want to update the cron schedule to run the function more often, or take a little break.
 
 <details>
   <summary>💡 HINT</summary>
@@ -233,7 +233,7 @@ func settings add "AzureWebJobs.greetings.Disabled" "true"
 
 ### <span class="task">🛠 TASK:</span> Update the log level
 
-As you've seen in the previous task, the logs don't contain the verbose messages, yet.
+As you've seen in the previous task, the logs don't contain the verbose messages yet.
 
 Update the _log level_ to trace for our `logs` function, but not for any other function.
 
@@ -299,7 +299,7 @@ Wait for a moment, until you get the message:
 Starting Live Log Stream ---
 ```
 
-Finally publish your Function App to Azure.
+Finally, publish your Function App to Azure.
 
 You'll see some messages like:
 
@@ -328,16 +328,16 @@ You can start the live metrics view with:
 func azure functionapp logstream <APP_NAME> --browser
 ```
 
-The command will open the the live metrics view for your function app in your browser and you can see your incoming requests, as well as the messages from our `logs` function.
+The command will open the the live metrics view for your function app in your browser and you can see your incoming requests as well as the messages from our `logs` function.
 
 > Note: The browser view might fail with [Data is temporarily inaccessible](https://learn.microsoft.com/en-us/azure/azure-monitor/app/live-stream#data-is-temporarily-inaccessible-status-message).
-> Try to deactivate your add blocker, cookie blocker and so on for `portal.azure.com` and it should work as expected.
+> Try to deactivate your ad blocker, cookie blocker and so on for `portal.azure.com` and it should work as expected.
 
 ### Query Application Insights
 
 As final step in this chapter we want to query our log messages from [Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview).
 
-You can use either the [query](https://learn.microsoft.com/en-us/cli/azure/monitor/app-insights#az-monitor-app-insights-query) command, or the [events show](https://learn.microsoft.com/en-us/cli/azure/monitor/app-insights/events#az-monitor-app-insights-events-show) command to receive message for your instance.
+You can use either the [query](https://learn.microsoft.com/en-us/cli/azure/monitor/app-insights#az-monitor-app-insights-query) command, or the [events show](https://learn.microsoft.com/en-us/cli/azure/monitor/app-insights/events#az-monitor-app-insights-events-show) command to receive messages for your instance.
 
 Let's look at both options in detail.
 
@@ -346,7 +346,7 @@ Let's look at both options in detail.
 
 #### <span class="task">🛠 TASK (optional):</span> Query your instance name
 
-You can skip this one if you didn't change the name of your Application Insights instance, when you created our Azure resources.
+You can skip this one if you didn't change the name of your Application Insights instance when you created our Azure resources.
 
 If you changed the name, query it and replace `ains-training-demo` with your `<INSTANCE_NAME>` in the commands below.
 
@@ -363,7 +363,7 @@ az resource list --resource-group rg-functions-demo --query "[?type=='Microsoft.
 
 #### Using query
 
-The command uses the [Kusto Query Language (KQL)](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/), which you can use in [Azure Portal](https://portal.azure.com) for Azure Monitor, as well as Azure Data Explorer.
+The command uses the [Kusto Query Language (KQL)](https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/), which you can use in [Azure Portal](https://portal.azure.com) for Azure Monitor as well as Azure Data Explorer.
 
 Take the latest 2 results within the last 5 minutes with:
 
@@ -371,12 +371,12 @@ Take the latest 2 results within the last 5 minutes with:
 az monitor app-insights query --resource-group rg-functions-demo --app ains-training-demo --analytics-query 'traces | sort by timestamp desc | take 2' --offset 5m
 ```
 
-The output are one or more tables represented as json.
+The output is one or more tables represented as [JSON](https://www.json.org).
 It's very powerful, but the output on the command line is not optimal for further processing.
 
-When it comes to our trace levels you can find the messages for a specific level by querying for the specific [severityLevel](https://learn.microsoft.com/en-us/dotnet/api/microsoft.applicationinsights.datacontracts.severitylevel).
+When it comes to our trace levels, you can find the messages for a specific level by querying for the specific [severityLevel](https://learn.microsoft.com/en-us/dotnet/api/microsoft.applicationinsights.datacontracts.severitylevel).
 
-We can queries our verbose messages, during the last 10 minutes with:
+We can query our verbose messages during the last 10 minutes with:
 
 ```shell
 az monitor app-insights query --resource-group rg-functions-demo --app ains-training-demo --analytics-query 'traces | where severityLevel == 0 and operation_Name has "logs" | project message, timestamp | sort by timestamp desc' --offset 10m
@@ -402,5 +402,5 @@ We can queries our verbose messages, during the last 10 minutes with:
 az monitor app-insights events show --resource-group rg-functions-demo --app ains-training-demo --type traces --offset 10m --query "value[?operation.name=='logs'].[trace, timestamp]"
 ```
 
-> Note: A recommended alternative, especially if you work with more CLIs using json as output format, is using [jq](https://github.com/stedolan/jq) and [bat](https://github.com/sharkdp/bat).
+> Note: A recommended alternative, especially if you work with more CLIs using JSON as output format, is using [jq](https://github.com/stedolan/jq) and [bat](https://github.com/sharkdp/bat).
 > It's more fun with these two extraordinary tools.
