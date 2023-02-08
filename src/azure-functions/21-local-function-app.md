@@ -43,6 +43,8 @@ If the package `@types/node` is not installed in version _18_ update it with:
 npm install -D @types/node@18
 ```
 
+> Note: We're using the types for `@types/node@18`, because the version should match with the Node.js version mentioned in [prerequisites](./README.md#prerequisites).
+
 ## The Function App's files
 
 Let's take a look at the Function App specific files in our new app.
