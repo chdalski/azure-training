@@ -35,7 +35,7 @@ func azure functionapp publish <APP_NAME>
 <details>
   <summary>Sample output</summary>
 
-```
+```text
 Getting site publishing info...
 Creating archive for current directory...
 Uploading 427.34 KB [#############################################################################]
@@ -65,7 +65,7 @@ From our local tests we also know that our functions are located in the `api` su
 
 So, your URL should look like:
 
-```
+```text
 https://<APP_NAME>.azurewebsites.net/api/greetings
 ```
 

@@ -118,7 +118,7 @@ az monitor metrics list --resource-group rg-functions-demo --resource-type "Micr
 
 The Average column might be empty if no metric was recorded before.
 
-```
+```text
 Timestamp            Name                 Average
 -------------------  -------------------  ---------
 2023-01-31 11:17:00  Health check status

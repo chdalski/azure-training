@@ -125,7 +125,7 @@ The output contains details on the Core Tools version and the runtime version, b
 <details>
   <summary>Sample output</summary>
 
-```
+```text
 Azure Functions Core Tools
 Core Tools Version:       4.0.4915 Commit hash: N/A  (64-bit)
 Function Runtime Version: 4.14.0.19631

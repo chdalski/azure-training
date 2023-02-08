@@ -1,8 +1,9 @@
 {
   "version": "0.2",
-  "ignorePaths": [],
+  "ignorePaths": ["book", ".github", "megalinter-reports"],
   "dictionaryDefinitions": [],
   "dictionaries": [],
+  "language": "en",
   "words": [
     "appservice",
     "appsettings",

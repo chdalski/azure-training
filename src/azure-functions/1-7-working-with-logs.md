@@ -295,7 +295,7 @@ func azure functionapp logstream <APP_NAME>
 
 Wait for a moment, until you get the message:
 
-```
+```text
 Starting Live Log Stream ---
 ```
 
@@ -303,7 +303,7 @@ Finally, publish your Function App to Azure.
 
 You'll see some messages like:
 
-```
+```text
 [INFO]  Starting OpenBSD Secure Shell server: sshd.
 [INFO]  Hosting environment: Production
 [INFO]  Content root path: /azure-functions-host

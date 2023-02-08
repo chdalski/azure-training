@@ -110,7 +110,7 @@ For now we can just leave it like that as we made sure nobody besides us can cal
 
 The Function App can still be executed, even though you'll get a warning:
 
-```
+```text
 Can't determine project language from files. Please use one of [--csharp, --javascript, --typescript, --java, --python, --powershell, --custom]
 ```
 
