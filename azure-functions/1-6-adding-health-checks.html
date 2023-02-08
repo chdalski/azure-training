@@ -1,0 +1,380 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Adding health checks - Azure Trainings</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../src/css/custom.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Trainings</li><li class="chapter-item expanded "><a href="../azure-functions/index.html"><strong aria-hidden="true">1.</strong> Azure Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../azure-functions/1-1-local-function-app.html"><strong aria-hidden="true">1.1.</strong> Local Function App</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-2-local-function.html"><strong aria-hidden="true">1.2.</strong> Local Function</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-3-azure-function-app.html"><strong aria-hidden="true">1.3.</strong> Azure Function App</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-4-deploying-local-to-azure.html"><strong aria-hidden="true">1.4.</strong> Deploying your App to Azure</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-5-working-with-app-settings.html"><strong aria-hidden="true">1.5.</strong> Working with App Settings</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-6-adding-health-checks.html" class="active"><strong aria-hidden="true">1.6.</strong> Adding health checks</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-7-working-with-logs.html"><strong aria-hidden="true">1.7.</strong> Working with Logs</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-8-basic-function-security.html"><strong aria-hidden="true">1.8.</strong> Basic Function Security</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-9-cleanup.html"><strong aria-hidden="true">1.9.</strong> Cleanup</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Azure Trainings</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/chdalski/azure-training/tree/main" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/chdalski/azure-training/edit/main/src/azure-functions/1-6-adding-health-checks.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="adding-health-checks"><a class="header" href="#adding-health-checks">Adding health checks</a></h1>
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p>In this chapter we're going to add basic health check functionality to our Function App, which you can use to implement <a href="https://learn.microsoft.com/en-us/azure/service-health/resource-health-overview">Azure Service Health alerts</a> (not part of this training).</p>
+<p>The hosting infrastructure for Azure Functions is provided by <a href="https://learn.microsoft.com/en-us/azure/app-service/overview">Azure App Service</a>.
+Therefore the documentation for <a href="https://learn.microsoft.com/en-us/azure/app-service/monitor-instances-health-check">health checks</a> is found in the Azure App Service documentation rather then for Azure Functions.</p>
+<p>The Health Check feature can be used to monitor Function Apps on the Premium (Elastic Premium) and Dedicated (App Service) plans only.
+It's not an option for the Consumption plan, however, as the runtime for these Function Apps is only available when functions are called.</p>
+<p>Commands in this chapter are to be executed in the <em>Function App</em> root directory unless stated otherwise.</p>
+<h2 id="creating-a-health-check-endpoint"><a class="header" href="#creating-a-health-check-endpoint">Creating a health check endpoint</a></h2>
+<p>Reading the <a href="https://learn.microsoft.com/en-us/azure/app-service/monitor-instances-health-check#what-app-service-does-with-health-checks">documentation</a>, we learn that creating an health check endpoint is rather simple.</p>
+<ul>
+<li>our Function App needs an endpoint that returns HTTP status code 200 if everything is fine and 500 otherwise</li>
+<li>the default path for that endpoint is called <em>health</em></li>
+</ul>
+<p>We also learn that health checks are usually used as an interface to probe other services our Function App depends on, like databases and so on.
+As we have no database available we need to substitute it.</p>
+<p>But let's take one step at a time.</p>
+<h3 id="-task-create-the-endpoint"><a class="header" href="#-task-create-the-endpoint"><span class="task">🛠 TASK:</span> Create the endpoint</a></h3>
+<p>As you have done before, create a new function called <code>health</code> with authorization level <code>anonymous</code>.</p>
+<details>
+  <summary>💡 HINT</summary>
+<p>We already create a function like that <a href="./1-2-local-function.html#add-a-function-to-our-function-app">before</a>.</p>
+</details>
+<br/>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<pre><code class="language-shell">func new --name health --authlevel anonymous --template &quot;HTTP Trigger&quot;
+</code></pre>
+</details>
+<h3 id="-task-update-the-implementation"><a class="header" href="#-task-update-the-implementation"><span class="task">🛠 TASK:</span> Update the implementation</a></h3>
+<p>As of now we don't have a bad path option, so let's just implement the <a href="https://en.wikipedia.org/wiki/Happy_path">happy path</a> first.
+We want to return HTTP status code 200.</p>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Update the code (snippet):</p>
+<pre><code class="language-typescript">const httpTrigger: AzureFunction = async function (
+  context: Context,
+  req: HttpRequest
+): Promise&lt;void&gt; {
+  context.res = {
+    status: 200,
+  };
+};
+</code></pre>
+</details>
+<h3 id="-task-deploy-the-function-app"><a class="header" href="#-task-deploy-the-function-app"><span class="task">🛠 TASK:</span> Deploy the Function App</a></h3>
+<p>Let's deploy the Function App before we continue.</p>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Look up the name:</p>
+<pre><code class="language-shell">az resource list --resource-group rg-functions-demo --query &quot;[?kind=='functionapp,linux'].name&quot;
+</code></pre>
+<p>Afterwards deploy your Function App with:</p>
+<pre><code class="language-shell">func azure functionapp publish &lt;APP_NAME&gt;
+</code></pre>
+</details>
+<h3 id="-task-update-the-health-check-settings"><a class="header" href="#-task-update-the-health-check-settings"><span class="task">🛠 TASK:</span> Update the health check settings</a></h3>
+<p>Azure Functions won't automatically probe the health endpoint just because there's an implementation.
+So we need to update our Function App in order to make use of it.</p>
+<p>Update the health check settings with:</p>
+<pre><code class="language-shell">az webapp config set --resource-group rg-functions-demo --name &lt;APP_NAME&gt; --generic-configurations '{&quot;healthCheckPath&quot;: &quot;/api/health/&quot;}'
+</code></pre>
+<blockquote>
+<p>Note: In a real world scenario we wouldn't execute the command like that.
+Instead we would update our IaC template (bicep, terraform, you name it).
+However, you might have changed your Function App because you tested something or you're using an alternate language and updated the template and we might end up breaking your Function App if we would use an updated template – that's why we don't.</p>
+</blockquote>
+<h3 id="-task-optional-monitor-the-health-check-status"><a class="header" href="#-task-optional-monitor-the-health-check-status"><span class="task">🛠 TASK (optional):</span> Monitor the health check status</a></h3>
+<p>Before you can start monitoring the health check status of your Function App, you should take a little break, because it'll take a while before any metric is available.</p>
+<p>So wait for at least 5 Minutes before you execute:</p>
+<pre><code class="language-shell">az monitor metrics list --resource-group rg-functions-demo --resource-type &quot;Microsoft.Web/sites&quot; --metric &quot;HealthCheckStatus&quot; --interval 5m --output table --resource &lt;APP_NAME&gt;
+</code></pre>
+<details>
+  <summary>Sample output</summary>
+<p>The Average column might be empty if no metric was recorded before.</p>
+<pre><code class="language-text">Timestamp            Name                 Average
+-------------------  -------------------  ---------
+2023-01-31 11:17:00  Health check status
+2023-01-31 11:22:00  Health check status
+2023-01-31 11:27:00  Health check status
+2023-01-31 11:32:00  Health check status
+2023-01-31 11:37:00  Health check status
+2023-01-31 11:42:00  Health check status
+2023-01-31 11:47:00  Health check status
+2023-01-31 11:52:00  Health check status
+2023-01-31 11:57:00  Health check status
+2023-01-31 12:02:00  Health check status  33.333333333333336
+2023-01-31 12:07:00  Health check status  100.0
+2023-01-31 12:12:00  Health check status  100.0
+</code></pre>
+</details>
+<blockquote>
+<p>Note: The output from the monitor command depends on the interval and the execution time.
+So depending on what interval you choose and what time you execute it you might get different results.
+If you want results based on a specific start time, you can set the <code>--start-time</code> parameter.
+Take a look at the <a href="https://learn.microsoft.com/en-us/cli/azure/monitor/metrics?view=azure-cli-latest#az-monitor-metrics-list">az monitor metrics</a> documentation for further options.</p>
+</blockquote>
+<h3 id="-task-prepare-the-unhappy-path"><a class="header" href="#-task-prepare-the-unhappy-path"><span class="task">🛠 TASK:</span> Prepare the unhappy path</a></h3>
+<p>As already mentioned, we don't have any database or other alternate service available which we could use to test our health check against.</p>
+<p>So we're going to implement a function that allows us to toggle an environment variable to either true or false.
+Afterwards we can use that environment variable in our health check to toggle its state.</p>
+<p>Create a function called <code>toggles</code> and implement it with the following traits:</p>
+<ul>
+<li>the API expects either the <em>query</em> or the <em>body</em> to contain a variable called <code>toggle</code></li>
+<li>create a switch for that toggle</li>
+<li>the switch either knows the toggle and toggles its value or it returns an HTTP status code 400</li>
+<li>the toggle for the health state is called <code>isHealthy</code> and will toggle an environment variable called <code>TOGGLE_IS_HEALTHY</code></li>
+<li>valid values for the environment variable are <code>&quot;true&quot;</code> or <code>&quot;false&quot;</code></li>
+<li>if the environment variable is not undefined, default to <code>&quot;false&quot;</code></li>
+<li>respond with HTTP status code 200 and a message which value was toggled</li>
+</ul>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Create the function with:</p>
+<pre><code class="language-shell">func new --name toggles --authlevel anonymous --template &quot;HTTP Trigger&quot;
+</code></pre>
+<p>Update the code (snippet):</p>
+<pre><code class="language-typescript">const httpTrigger: AzureFunction = async function (
+  context: Context,
+  req: HttpRequest
+): Promise&lt;void&gt; {
+  const toggle = req.query.toggle || (req.body &amp;&amp; req.body.toggle);
+  var responseStatus = 200;
+  var responseMessage = &quot;&quot;;
+
+  context.log(`Toggling: ${toggle}`);
+
+  switch (toggle) {
+    case &quot;isHealthy&quot;:
+      if (process.env.TOGGLE_IS_HEALTHY == &quot;false&quot;) {
+        process.env.TOGGLE_IS_HEALTHY = &quot;true&quot;;
+      } else {
+        process.env.TOGGLE_IS_HEALTHY = &quot;false&quot;;
+      }
+      responseMessage = `Toggled ${toggle} to ${process.env.TOGGLE_IS_HEALTHY}`;
+      break;
+    default:
+      context.log.error(`Unknown toggle: ${toggle}`);
+      responseStatus = 400;
+      break;
+  }
+
+  context.res = {
+    status: responseStatus,
+    body: responseMessage,
+  };
+};
+</code></pre>
+</details>
+<h3 id="-task-update-the-health-check-function"><a class="header" href="#-task-update-the-health-check-function"><span class="task">🛠 TASK:</span> Update the health check function</a></h3>
+<p>Now that we can toggle our environment variable using a simple API called, it's time to use that variable in our health check function.</p>
+<p>Update the function to respond with HTTP status code 500 if <code>process.env.TOGGLE_IS_HEALTHY</code> is <code>&quot;false&quot;</code>, otherwise respond with HTTP status code 200.</p>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Update the code (snippet):</p>
+<pre><code class="language-typescript">const httpTrigger: AzureFunction = async function (
+  context: Context,
+  req: HttpRequest
+): Promise&lt;void&gt; {
+  const responseStatus = process.env.TOGGLE_IS_HEALTHY == &quot;false&quot; ? 500 : 200;
+  context.res = {
+    status: responseStatus,
+  };
+};
+</code></pre>
+</details>
+<h3 id="-task-optional-deploy-toggle-and-monitor-the-health-status"><a class="header" href="#-task-optional-deploy-toggle-and-monitor-the-health-status"><span class="task">🛠 TASK (optional):</span> Deploy, Toggle and Monitor the health status</a></h3>
+<p>You can now deploy your Function App as well as toggle and monitor the health status.
+Remember, though, it might take a while till the status is available.</p>
+<p>You can also use <a href="https://learn.microsoft.com/en-us/azure/service-health/resource-health-overview">Azure Service Health alerts</a> to monitor your Function App in Azure Portal.
+As this is not part of our training, remember to clean up afterwards.</p>
+<blockquote>
+<p>Note: Toggle the health state back to <code>&quot;true&quot;</code> when you're done or Azure will try to restart your Function after a while.</p>
+</blockquote>
+<h2 id="quiz"><a class="header" href="#quiz"><span class="quiz">Quiz</span></a></h2>
+<details>
+  <summary>What's the application setting <span class="italic">WEBSITE_HEALTHCHECK_MAXPINGFAILURES</span> used for and what's its default value (hint: App Service documentation)?</summary>
+<p>The default value is <strong>10</strong> and it's used to determine how many failed requests to the health check endpoint are valid, before the service is deemed unhealthy.</p>
+</details>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../azure-functions/1-5-working-with-app-settings.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../azure-functions/1-7-working-with-logs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../azure-functions/1-5-working-with-app-settings.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../azure-functions/1-7-working-with-logs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

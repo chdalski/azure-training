@@ -1,0 +1,487 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Working with Logs - Azure Trainings</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../src/css/custom.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Trainings</li><li class="chapter-item expanded "><a href="../azure-functions/index.html"><strong aria-hidden="true">1.</strong> Azure Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../azure-functions/1-1-local-function-app.html"><strong aria-hidden="true">1.1.</strong> Local Function App</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-2-local-function.html"><strong aria-hidden="true">1.2.</strong> Local Function</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-3-azure-function-app.html"><strong aria-hidden="true">1.3.</strong> Azure Function App</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-4-deploying-local-to-azure.html"><strong aria-hidden="true">1.4.</strong> Deploying your App to Azure</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-5-working-with-app-settings.html"><strong aria-hidden="true">1.5.</strong> Working with App Settings</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-6-adding-health-checks.html"><strong aria-hidden="true">1.6.</strong> Adding health checks</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-7-working-with-logs.html" class="active"><strong aria-hidden="true">1.7.</strong> Working with Logs</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-8-basic-function-security.html"><strong aria-hidden="true">1.8.</strong> Basic Function Security</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-9-cleanup.html"><strong aria-hidden="true">1.9.</strong> Cleanup</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Azure Trainings</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/chdalski/azure-training/tree/main" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/chdalski/azure-training/edit/main/src/azure-functions/1-7-working-with-logs.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="working-with-logs"><a class="header" href="#working-with-logs">Working with Logs</a></h1>
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p>When it comes to logging, sadly an often undervalued topic, Azure Function Apps have quite a broad scope of different mechanisms available, including <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#streaming-logs">Streaming Logs</a>, <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#diagnostic-logs">Diagnostic Logs</a>, <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#scale-controller-logs">Scale controller logs</a> and <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#azure-monitor-metrics">Azure Monitor metrics</a>.</p>
+<p>In the last chapter we were already using Azure Monitor metrics to query information about the health check status.</p>
+<p>In this chapter, we're going to focus solely on the basics of <em>Streaming Logs</em>, which come in two flavours:</p>
+<ul>
+<li><strong>Built-in log streaming</strong> lets you view a stream of your <em>application log</em> files. This stream is equivalent to the output seen when you debug your functions during local development. This streaming method supports only a single instance and can't be used with an app running on Linux in a Consumption plan.</li>
+<li><strong>Live Metrics streaming</strong> lets you view log data and other metrics in near real time when your Function App is connected to Application Insights.</li>
+</ul>
+<p>We're also going to look into how to run only specific functions, disabling functions and so on.</p>
+<p>Commands in this chapter are to be executed in the <em>Function App</em> root directory unless stated otherwise.</p>
+<h2 id="look-under-the-hood"><a class="header" href="#look-under-the-hood">Look under the hood</a></h2>
+<p>Before we take a look at the logs, we take a little detour and talk a little about trace levels and log levels, learn the difference and write a little function to write some logs.</p>
+<h3 id="trace-levels"><a class="header" href="#trace-levels">Trace levels</a></h3>
+<p><em>Trace levels</em> define what kind of message we send to our logs stream.</p>
+<p>One of the reasons why we're focusing solely on the basics of streaming logs is because trace levels in Azure Functions depend on your <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#writing-to-logs">language of choice</a>.</p>
+<p>Nevertheless, the following four basic levels are available in most languages:</p>
+<ol>
+<li><strong>Information</strong>: should be purely informative and not looking into them on a regular basis shouldn’t result in missing any important information. These logs should have long-term value.</li>
+<li><strong>Warning</strong>: should be used when something unexpected happens, but the function can continue the work</li>
+<li><strong>Error</strong>: should be used when the function hits an issue preventing one or more functionalities from properly executing</li>
+<li><strong>Trace / Verbose</strong>: should be used for events considered to be useful during software debugging when more granular information is needed</li>
+</ol>
+<p>In <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-node#trace-levels">Typescript / Javascript</a> we can access the logger via the context as shown in the table below.</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Trace Level</th><th style="text-align: left">Write with</th></tr></thead><tbody>
+<tr><td style="text-align: left">Information</td><td style="text-align: left"><code>context.log.info(message)</code> or <code>context.log(message)</code></td></tr>
+<tr><td style="text-align: left">Warning</td><td style="text-align: left"><code>context.log.warn(message)</code></td></tr>
+<tr><td style="text-align: left">Error</td><td style="text-align: left"><code>context.log.error(message)</code></td></tr>
+<tr><td style="text-align: left">Verbose</td><td style="text-align: left"><code>context.log.verbose(message)</code></td></tr>
+</tbody></table>
+</div>
+<p>We've already used <code>context.log</code> and if you took a closer look to the logs from the runtime process you should have already seen some of these messages.</p>
+<blockquote>
+<p>Note: Don't mistake <code>console.log</code> for <code>context.log</code>.
+Because output from <code>console.log</code> is captured at the function app level, it's not tied to a specific function invocation and isn't displayed in a specific function's logs.</p>
+</blockquote>
+<h3 id="log-levels"><a class="header" href="#log-levels">Log Levels</a></h3>
+<p><a href="https://learn.microsoft.com/en-us/azure/azure-functions/configure-monitoring#configure-log-levels">Log levels</a> define what kind of messages we want to capture in our logs.</p>
+<p>While there are only four <em>trace levels</em>, there are seven <em>log levels</em>.
+That's because the <em>trace levels</em> are language-specific, whereas the <em>log levels</em> are runtime-specific.
+The Function App runtime is written in .NET, which knows all seven levels for logs and traces.</p>
+<p>The six log levels are <em>Trace</em>, <em>Debug</em>, <em>Information</em>, <em>Warning</em>, <em>Error</em>, <em>Critical</em>, <em>None</em>, whereas <em>Trace</em> is the highest level and <em>None</em>, of course, the lowest.
+The level you choose includes all lower levels, except for <em>None</em> which will deactivate logging completely.
+So, if you choose <em>Warning</em>, for example, you would also include <em>Error</em> and <em>Critical</em> log messages.</p>
+<p>Log levels can be configured for different <a href="https://learn.microsoft.com/en-us/azure/azure-functions/configure-monitoring#configure-categories">categories</a>.
+The important ones for us right now are only <em>Function</em> and <em>default</em>, though.
+<em>Function</em> specifies the log level for your functions and <em>default</em> for all categories not configured otherwise.</p>
+<p>The log levels can be configured in the <em>host.json</em>, so on the scale of the whole Function App.
+Nevertheless, we can specify the <em>log level</em> per function and will do so in a later task.</p>
+<details>
+  <summary>Sample <span class="italic">host.json</span></summary>
+<pre><code class="language-json">{
+  &quot;version&quot;: &quot;2.0&quot;,
+  &quot;logging&quot;: {
+    &quot;applicationInsights&quot;: {
+      &quot;samplingSettings&quot;: {
+        &quot;isEnabled&quot;: true,
+        &quot;excludedTypes&quot;: &quot;Request&quot;
+      }
+    },
+    &quot;logLevel&quot;: {
+      &quot;default&quot;: &quot;Information&quot;,
+      &quot;Host.Results&quot;: &quot;Warning&quot;,
+      &quot;Function&quot;: &quot;Trace&quot;,
+      &quot;Host.Aggregator&quot;: &quot;Warning&quot;
+    }
+  },
+  &quot;extensionBundle&quot;: {
+    &quot;id&quot;: &quot;Microsoft.Azure.Functions.ExtensionBundle&quot;,
+    &quot;version&quot;: &quot;[4.0.0, 5.0.0)&quot;
+  }
+}
+</code></pre>
+</details>
+<p>As already mentioned, log levels are runtime-specific, so changing the log level (for functions) will impact all your functions.
+We'll learn how to work around that later in this chapter.</p>
+<p>Let's add the <em>log levels</em> to the table</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Trace Level</th><th style="text-align: left">Write with</th><th style="text-align: left">Log Level</th></tr></thead><tbody>
+<tr><td style="text-align: left">Information</td><td style="text-align: left"><code>context.log.info(message)</code> or <code>context.log(message)</code></td><td style="text-align: left">Information</td></tr>
+<tr><td style="text-align: left">Warning</td><td style="text-align: left"><code>context.log.warn(message)</code></td><td style="text-align: left">Warning</td></tr>
+<tr><td style="text-align: left">Error</td><td style="text-align: left"><code>context.log.error(message)</code></td><td style="text-align: left">Error</td></tr>
+<tr><td style="text-align: left">Verbose</td><td style="text-align: left"><code>context.log.verbose(message)</code></td><td style="text-align: left">Trace</td></tr>
+</tbody></table>
+</div>
+<p>The only surprise here is that <em>Verbose</em> correlates to <em>Trace</em>, not to <em>Debug</em> as one might have expected.</p>
+<blockquote>
+<p>Note: The <em>host.json</em> is included when deploying the Function App, so remember to reset your settings before you deploy it.
+Or, as we do later in this chapter, overwrite the <em>host.json</em> settings in your <em>local.settings.json</em> as described <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json#override-hostjson-values">here</a>.</p>
+</blockquote>
+<h2 id="creating-a-log-function"><a class="header" href="#creating-a-log-function">Creating a log function</a></h2>
+<p>Now, we want to add a function which automatically writes log data once in a while.</p>
+<h3 id="-task-create-a-timer-trigger-function"><a class="header" href="#-task-create-a-timer-trigger-function"><span class="task">🛠 TASK:</span> Create a Timer Trigger function</a></h3>
+<p>Let's add another function to write some log messages.
+But this time we'll create a <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?pivots=programming-language-javascript">Timer Trigger</a> function rather then an HTTP Trigger.</p>
+<p>A <em>Timer Trigger</em> is triggered at scheduled times.
+The schedule is defined via a <a href="https://en.wikipedia.org/wiki/Cron#Cron_expression">Cron Expressions</a> and the expression is configured in the <em>function.json</em>.</p>
+<p>If you need a verbal interpretation of a cron expression, you can use a <a href="https://crontab.cronhub.io/">cron expression generator</a> website.</p>
+<details>
+  <summary>Sample function.json</summary>
+<pre><code class="language-json">{
+  &quot;bindings&quot;: [
+    {
+      &quot;name&quot;: &quot;myTimer&quot;,
+      &quot;type&quot;: &quot;timerTrigger&quot;,
+      &quot;direction&quot;: &quot;in&quot;,
+      &quot;schedule&quot;: &quot;0 */5 * * * *&quot;
+    }
+  ],
+  &quot;scriptFile&quot;: &quot;../dist/logs/index.js&quot;
+}
+</code></pre>
+</details>
+<br/>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>The function can be easily created using the <em>Timer Trigger</em> template.
+The difference this time is, that we don't need to specify the <code>authlevel</code>, because the function is not called by an external source.</p>
+<p>Create the function with:</p>
+<pre><code class="language-shell">func new --name logs --template &quot;Timer trigger&quot;
+</code></pre>
+</details>
+<h3 id="-task-update-the-function-code"><a class="header" href="#-task-update-the-function-code"><span class="task">🛠 TASK:</span> Update the function code</a></h3>
+<p>Next, we want to update the function code to write a log message for each trace level.</p>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Update the code (snippet):</p>
+<pre><code class="language-typescript">const timerTrigger: AzureFunction = async function (
+  context: Context,
+  myTimer: any
+): Promise&lt;void&gt; {
+  const functionName = context.executionContext.functionName;
+
+  context.log.verbose(`Timer trigger: ${JSON.stringify(myTimer)}`);
+
+  context.log.info(`=&gt; Information from function &quot;${functionName}&quot;`);
+  context.log.warn(`=&gt; Warning from function &quot;${functionName}&quot;`);
+  context.log.error(`=&gt; Error from function &quot;${functionName}&quot;`);
+};
+</code></pre>
+</details>
+<h3 id="-task-configure-which-functions-to-run"><a class="header" href="#-task-configure-which-functions-to-run"><span class="task">🛠 TASK:</span> Configure which functions to run</a></h3>
+<p>The task is to start the Function App, but let it run the <em>logs</em> function only.</p>
+<p>There're two possibilities to do so, you could either <a href="https://learn.microsoft.com/en-us/azure/azure-functions/disable-function#localsettingsjson">disable</a> all other functions in the <em>local.settings.json</em>, or you could define which functions <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json#functions">to run</a> in the <em>host.json</em>.
+So it's either a <a href="https://en.wikipedia.org/wiki/Whitelist">denylist</a> or an <a href="https://en.wikipedia.org/wiki/Blacklist_(computing)">allowlist</a>.</p>
+<p>We want to use a allowlist, but we want to run just some local tests.
+So we don't want to change the <em>host.json</em> file because it's deployed to Azure.
+Therefore, we need a possibility to <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json#override-hostjson-values">overwrite</a> <em>host.json</em> configuration locally.</p>
+<p>Check out the <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json">documentation</a> and create an allowlist, including only the <em>logs</em> function.</p>
+<p>Start the function, after changing the settings, to see the log messages.
+Depending on how patient, or rather how impatient you are, you might also want to update the cron schedule to run the function more often, or take a little break.</p>
+<details>
+  <summary>💡 HINT</summary>
+<ul>
+<li>You need overwrite host settings for <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json#functions">functions</a></li>
+<li>Overwritten host settings always start with <code>AzureFunctionsJobHost</code></li>
+<li>Next you need to follow the <code>json</code> path to the specific setting and replace every opening curly bracket (<code>{</code>) with tow underscores (<code>__</code>)</li>
+<li>The settings for <code>function</code> is an array and arrays are are numbered starting with <em>zero</em> (<code>0</code>)</li>
+</ul>
+</details>
+<br/>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Update the <em>local.settings.json</em> with:</p>
+<pre><code class="language-shell">func settings add &quot;AzureFunctionsJobHost__functions__0&quot; &quot;logs&quot;
+</code></pre>
+<p>For the sake of completion, disabling functions can be done with:</p>
+<pre><code class="language-shell"># Noteworthy is the difference on the first level.
+# Function settings are overwritten starting with &quot;AzureWebJobs&quot;.&quot;FunctionName&quot;...
+func settings add &quot;AzureWebJobs.greetings.Disabled&quot; &quot;true&quot;
+</code></pre>
+</details>
+<blockquote>
+<p>Note: Some types of logging buffer write to the log file, which can result in out of order events in the stream.</p>
+</blockquote>
+<h3 id="-task-update-the-log-level"><a class="header" href="#-task-update-the-log-level"><span class="task">🛠 TASK:</span> Update the log level</a></h3>
+<p>As you've seen in the previous task, the logs don't contain the verbose messages yet.</p>
+<p>Update the <em>log level</em> to trace for our <code>logs</code> function, but not for any other function.</p>
+<details>
+  <summary>💡 HINT</summary>
+<ul>
+<li>You need overwrite host settings for <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json#logging">logging</a></li>
+<li>See the answer of the previous task for further details how to do so</li>
+</ul>
+</details>
+<br/>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Update the <em>host.json</em> (snippet):</p>
+<pre><code class="language-json">{
+  &quot;version&quot;: &quot;2.0&quot;,
+  &quot;logging&quot;: {
+    &quot;applicationInsights&quot;: {
+      ...
+    },
+    &quot;logLevel&quot;: {
+      &quot;Function.logs&quot;: &quot;Trace&quot;,
+    }
+  },
+  &quot;extensionBundle&quot;: {
+    ...
+  }
+}
+</code></pre>
+<p>For the sake of completion, updating the <em>local.settings.json</em> could be done with:</p>
+<pre><code class="language-shell">func settings add &quot;AzureFunctionsJobHost__logging__LogLevel__Function.logs&quot; &quot;Trace&quot;
+</code></pre>
+</details>
+<h2 id="streaming-logs"><a class="header" href="#streaming-logs">Streaming logs</a></h2>
+<p>At long last, our logs function automatically writes some logs we can work with.
+Let's get into it!</p>
+<h3 id="built-in-log-streaming"><a class="header" href="#built-in-log-streaming">Built-in log streaming</a></h3>
+<p>Built-in log streaming lets you view a stream of your <em>application log</em> files.
+This is not yet supported for Linux apps in the Consumption plan.</p>
+<p>However, that's not an issue for us, because we're luckily using an <a href="https://learn.microsoft.com/en-us/azure/app-service/overview-hosting-plans">App Service plan</a> to run our functions.</p>
+<p>Use the <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-core-tools-reference#func-azure-functionapp-logstream">logstream command</a> to show your Function App logs on the command line:</p>
+<pre><code class="language-shell">func azure functionapp logstream &lt;APP_NAME&gt;
+</code></pre>
+<p>Wait for a moment, until you get the message:</p>
+<pre><code class="language-text">Starting Live Log Stream ---
+</code></pre>
+<p>Finally, publish your Function App to Azure.</p>
+<p>You'll see some messages like:</p>
+<pre><code class="language-text">[INFO]  Starting OpenBSD Secure Shell server: sshd.
+[INFO]  Hosting environment: Production
+[INFO]  Content root path: /azure-functions-host
+[INFO]  Now listening on: http://[::]:80
+[INFO]  Application started. Press Ctrl+C to shut down.
+No new trace in the past 1 min(s).
+</code></pre>
+<p>These logs only show messages written by the Function App itself, but not for a specific function.</p>
+<p>So let's stop the execution with <code>Ctrl+c</code> and move on.</p>
+<h3 id="live-metrics-streaming"><a class="header" href="#live-metrics-streaming">Live Metrics streaming</a></h3>
+<p><a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/live-stream">Live Metrics streaming</a> lets you view log data and other metrics in near real time.
+However, it only works for Function Apps connected to Application Insights.
+And, as you might have guessed, we already did that.</p>
+<p>You can start the live metrics view with:</p>
+<pre><code class="language-shell">func azure functionapp logstream &lt;APP_NAME&gt; --browser
+</code></pre>
+<p>The command will open the the live metrics view for your function app in your browser and you can see your incoming requests as well as the messages from our <code>logs</code> function.</p>
+<blockquote>
+<p>Note: The browser view might fail with <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/live-stream#data-is-temporarily-inaccessible-status-message">Data is temporarily inaccessible</a>.
+Try to deactivate your ad blocker, cookie blocker and so on for <code>portal.azure.com</code> and it should work as expected.</p>
+</blockquote>
+<h3 id="query-application-insights"><a class="header" href="#query-application-insights">Query Application Insights</a></h3>
+<p>As final step in this chapter we want to query our log messages from <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview">Application Insights</a>.</p>
+<p>You can use either the <a href="https://learn.microsoft.com/en-us/cli/azure/monitor/app-insights#az-monitor-app-insights-query">query</a> command, or the <a href="https://learn.microsoft.com/en-us/cli/azure/monitor/app-insights/events#az-monitor-app-insights-events-show">events show</a> command to receive messages for your instance.</p>
+<p>Let's look at both options in detail.</p>
+<blockquote>
+<p>Note: New messages are not instantly displayed in Application Insights.
+You need to wait a couple of minutes for messages to be available.</p>
+</blockquote>
+<h4 id="-task-optional-query-your-instance-name"><a class="header" href="#-task-optional-query-your-instance-name"><span class="task">🛠 TASK (optional):</span> Query your instance name</a></h4>
+<p>You can skip this one if you didn't change the name of your Application Insights instance when you created our Azure resources.</p>
+<p>If you changed the name, query it and replace <code>ains-training-demo</code> with your <code>&lt;INSTANCE_NAME&gt;</code> in the commands below.</p>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Query the name of your Application Insights instance:</p>
+<pre><code class="language-shell">az resource list --resource-group rg-functions-demo --query &quot;[?type=='Microsoft.Insights/components'].name&quot;
+</code></pre>
+</details>
+<h4 id="using-query"><a class="header" href="#using-query">Using query</a></h4>
+<p>The command uses the <a href="https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/">Kusto Query Language (KQL)</a>, which you can use in <a href="https://portal.azure.com">Azure Portal</a> for Azure Monitor as well as Azure Data Explorer.</p>
+<p>Take the latest 2 results within the last 5 minutes with:</p>
+<pre><code class="language-shell">az monitor app-insights query --resource-group rg-functions-demo --app ains-training-demo --analytics-query 'traces | sort by timestamp desc | take 2' --offset 5m
+</code></pre>
+<p>The output is one or more tables represented as <a href="https://www.json.org">JSON</a>.
+It's very powerful, but the output on the command line is not optimal for further processing.</p>
+<p>When it comes to our trace levels, you can find the messages for a specific level by querying for the specific <a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.applicationinsights.datacontracts.severitylevel">severityLevel</a>.</p>
+<p>We can query our verbose messages during the last 10 minutes with:</p>
+<pre><code class="language-shell">az monitor app-insights query --resource-group rg-functions-demo --app ains-training-demo --analytics-query 'traces | where severityLevel == 0 and operation_Name has &quot;logs&quot; | project message, timestamp | sort by timestamp desc' --offset 10m
+</code></pre>
+<p>You will see some of your <code>Timer trigger</code> messages written with <code>context.log.verbose(message)</code>.
+If you updated the <em>host.json</em> to log verbose messages for the <code>logs</code> function, that is.</p>
+<h4 id="using-events-show"><a class="header" href="#using-events-show">Using events show</a></h4>
+<p>The command can be used with the global <code>--query</code> parameter to filter the messages.
+It uses a <a href="https://jmespath.org/">JMESPath query string</a> to filter the messages.</p>
+<p>List messages from the last 5 minutes with:</p>
+<pre><code class="language-shell">az monitor app-insights events show --resource-group rg-functions-demo --app ains-training-demo --type traces --offset 5m
+</code></pre>
+<p>We can queries our verbose messages, during the last 10 minutes with:</p>
+<pre><code class="language-shell">az monitor app-insights events show --resource-group rg-functions-demo --app ains-training-demo --type traces --offset 10m --query &quot;value[?operation.name=='logs'].[trace, timestamp]&quot;
+</code></pre>
+<blockquote>
+<p>Note: A recommended alternative, especially if you work with more CLIs using JSON as output format, is using <a href="https://github.com/stedolan/jq">jq</a> and <a href="https://github.com/sharkdp/bat">bat</a>.
+It's more fun with these two extraordinary tools.</p>
+</blockquote>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../azure-functions/1-6-adding-health-checks.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../azure-functions/1-8-basic-function-security.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../azure-functions/1-6-adding-health-checks.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../azure-functions/1-8-basic-function-security.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>

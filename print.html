@@ -1,0 +1,1268 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Azure Trainings</title>
+        <meta name="robots" content="noindex" />
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="src/css/custom.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Trainings</li><li class="chapter-item expanded "><a href="azure-functions/index.html"><strong aria-hidden="true">1.</strong> Azure Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="azure-functions/1-1-local-function-app.html"><strong aria-hidden="true">1.1.</strong> Local Function App</a></li><li class="chapter-item expanded "><a href="azure-functions/1-2-local-function.html"><strong aria-hidden="true">1.2.</strong> Local Function</a></li><li class="chapter-item expanded "><a href="azure-functions/1-3-azure-function-app.html"><strong aria-hidden="true">1.3.</strong> Azure Function App</a></li><li class="chapter-item expanded "><a href="azure-functions/1-4-deploying-local-to-azure.html"><strong aria-hidden="true">1.4.</strong> Deploying your App to Azure</a></li><li class="chapter-item expanded "><a href="azure-functions/1-5-working-with-app-settings.html"><strong aria-hidden="true">1.5.</strong> Working with App Settings</a></li><li class="chapter-item expanded "><a href="azure-functions/1-6-adding-health-checks.html"><strong aria-hidden="true">1.6.</strong> Adding health checks</a></li><li class="chapter-item expanded "><a href="azure-functions/1-7-working-with-logs.html"><strong aria-hidden="true">1.7.</strong> Working with Logs</a></li><li class="chapter-item expanded "><a href="azure-functions/1-8-basic-function-security.html"><strong aria-hidden="true">1.8.</strong> Basic Function Security</a></li><li class="chapter-item expanded "><a href="azure-functions/1-9-cleanup.html"><strong aria-hidden="true">1.9.</strong> Cleanup</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Azure Trainings</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/chdalski/azure-training/tree/main" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>This book is created with <a href="https://github.com/rust-lang/mdBook">mdBook</a>.</p>
+<h2 id="trainings"><a class="header" href="#trainings">Trainings</a></h2>
+<p>As of now, there's just one for Azure Functions.
+If time allows, however, I'll add more.</p>
+<h2 id="how-to-work-with-the-book"><a class="header" href="#how-to-work-with-the-book">How to work with the book</a></h2>
+<h3 id="select-headlines-as-anchors"><a class="header" href="#select-headlines-as-anchors">Select headlines as anchors</a></h3>
+<p>You can select headlines as anchors just by clicking on them.
+This will give a deep link to specific headline and I recommend it if you take a break or want to reference a specific part of the training.</p>
+<h3 id="code-blocks"><a class="header" href="#code-blocks">Code blocks</a></h3>
+<p>Code blocks, commands and output snippet are embedded like:</p>
+<pre><code class="language-json">{
+  &quot;this&quot;: &quot;is a json example&quot;
+}
+</code></pre>
+<p>You can copy the code block into your local clipboard to allow pasting into another application.</p>
+<h3 id="tasks"><a class="header" href="#tasks">Tasks</a></h3>
+<p>The book contains certain tasks where you're expected to do something.
+Some of them are marked as optional.</p>
+<p>Tasks are marked like this: <span class="task">🛠 TASK</span>.</p>
+<p>Task come with hints and solutions, but the former is optional.
+Just click on the text to reveal what's hidden.</p>
+<details>
+  <summary>💡 HINT</summary>
+<p>This is a <strong>hint</strong>!</p>
+</details>
+<br/>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>This is the <strong>solution</strong>!</p>
+</details>
+<h3 id="quizzes"><a class="header" href="#quizzes">Quizzes</a></h3>
+<p>Chapters might also contain quizzes.</p>
+<p>A quiz is marked like this: <span class="quiz">Quiz</span></p>
+<p>Quizzes are simple Q&amp;As and work exactly like <a href="index.html#tasks">tasks</a>.</p>
+<h2 id="local-use"><a class="header" href="#local-use">Local use</a></h2>
+<p>You can also clone the <a href="https://github.com/chdalski/azure-training">repository</a> and use <a href="https://github.com/rust-lang/mdBook">mdBook</a> locally.</p>
+<h2 id="contribution"><a class="header" href="#contribution">Contribution</a></h2>
+<p>If you encounter any errors or have any questions, open up a ticket on <a href="https://github.com/chdalski/azure-training/issues">GitHub</a>.</p>
+<p>Also, if you'd like to add trainings yourself, feel free to reach out to me.</p>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="azure-functions"><a class="header" href="#azure-functions">Azure Functions</a></h1>
+<h2 id="what-you-can-and-can-not-expect"><a class="header" href="#what-you-can-and-can-not-expect">What you can and can not expect</a></h2>
+<p>This training is designed to give you a fundamental understanding of <em>Azure Functions</em>, how they work and what you can do with it as well as some best practices for developers.</p>
+<p>This training is not designed as a exhaustive coding guide.
+There are samples, but they will be limited to showcase certain scenarios.</p>
+<blockquote>
+<p>Note: The Azure Resources we're going to allocate are <strong>not free of charge</strong>. We'll clean them up after the training, however.</p>
+</blockquote>
+<h2 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h2>
+<ul>
+<li>Create an <a href="https://portal.azure.com/">Azure Account</a></li>
+<li>Install <a href="https://learn.microsoft.com/en-us/cli/azure/install-azure-cli">Azure CLI</a></li>
+<li>Install <a href="https://nodejs.org/">Node.js 18</a> (the training will be in <a href="https://www.typescriptlang.org/">TypeScript</a>, but you can use <a href="https://learn.microsoft.com/en-us/azure/azure-functions/supported-languages">other languages</a> if you like)</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="local-function-app"><a class="header" href="#local-function-app">Local Function App</a></h1>
+<h2 id="introduction-1"><a class="header" href="#introduction-1">Introduction</a></h2>
+<p>In this chapter we will create a local function app and take a closer look at its files.</p>
+<p>Before we create our first <em>Function App</em>, let me point out an important distinction between the terms <em>Azure Functions</em>, <em>Functions</em>, <em>Function App</em> and <em>function</em>:</p>
+<p><em>Azure Functions</em>, <em>Functions</em> and <em>Function App</em> are used interchangeably in the documentation and refer to Azure's serverless compute service or more specific its runtime environment, whereas a <em>function</em> or <em>functions</em> (lower case) refer to a block of code executed in the runtime environment.</p>
+<h2 id="install-the-azure-function-core-tools"><a class="header" href="#install-the-azure-function-core-tools">Install the Azure Function Core Tools</a></h2>
+<p><a href="https://github.com/Azure/azure-functions-core-tools">Azure Functions Core Tools</a> let you develop and test your functions on your local computer from the command prompt or terminal.
+Your local functions can connect to live Azure services, and you can debug your functions on your local computer.
+You can even deploy a Function App to your Azure subscription.</p>
+<p>Install the Azure Function Core Tools via the node package manager (npm):</p>
+<pre><code class="language-shell">npm install -g azure-functions-core-tools@4 --unsafe-perm true
+</code></pre>
+<p>Check if you can execute the <code>func</code> command:</p>
+<pre><code class="language-shell">func --version
+</code></pre>
+<blockquote>
+<p>Note: If you can't execute the <code>func</code> command, check the output from the installation command and your <em>PATH</em> environment variable.</p>
+</blockquote>
+<h2 id="create-a-function-app"><a class="header" href="#create-a-function-app">Create a Function App</a></h2>
+<p>To create a new Function App in a directory called <code>function-app-demo</code>, type:</p>
+<pre><code class="language-shell">func init function-app-demo --worker-runtime node --language typescript
+</code></pre>
+<p>Change to the newly created directory and browse the <code>devDependencies</code> section in the package.json file.
+If the package <code>@types/node</code> is not installed in version <em>18</em> update it with:</p>
+<pre><code class="language-shell">npm install -D @types/node@18
+</code></pre>
+<blockquote>
+<p>Note: We're using the types for <code>@types/node@18</code>, because the version should match with the Node.js version mentioned in <a href="azure-functions/./README.html#prerequisites">prerequisites</a>.</p>
+</blockquote>
+<h2 id="the-function-apps-files"><a class="header" href="#the-function-apps-files">The Function App's files</a></h2>
+<p>Let's take a look at the Function App-specific files in our new app.</p>
+<h3 id="the-hostjson"><a class="header" href="#the-hostjson">The <em>host.json</em></a></h3>
+<p>The <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json">host.json</a> metadata file contains configuration options that affect all functions in a function app instance.</p>
+<p>Browsing the file contents, you will notice two different version statements.
+The first one (root level) defines the <em>Function Runtime</em> version and the second one defines the <em>Extension Bundle</em> version.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-versions?tabs=v4&amp;pivots=programming-language-typescript">Function Runtime</a>, as the name implies, specifies the runtime version for the function.
+The runtime version defined in the host.json can be misleading, though, because it's specified as either version <strong>1</strong> or version <strong>2</strong> where the latter effectively means version <strong>2 and above</strong>.
+The actual runtime version is defined by the <em>Azure Functions Core Tools</em> we're using.</p>
+<p><a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-register#extension-bundles">Extension bundles</a> are a way to add a pre-defined set of compatible binding extensions to your function app.</p>
+<h4 id="-task-update-the-extension-bundle-version"><a class="header" href="#-task-update-the-extension-bundle-version"><span class="task">🛠 TASK:</span> Update the extension bundle version</a></h4>
+<p>Update the extensionBundle version to version <strong>4</strong>.</p>
+<details>
+  <summary>💡 HINT</summary>
+<p>Check out the <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-register#extension-bundles">documentation</a>.</p>
+</details>
+<br/>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>The extensionBundle definition in the host.json should now look like:</p>
+<pre><code class="language-json">  &quot;extensionBundle&quot;: {
+    &quot;id&quot;: &quot;Microsoft.Azure.Functions.ExtensionBundle&quot;,
+    &quot;version&quot;: &quot;[4.0.0, 5.0.0)&quot;
+  }
+</code></pre>
+</details>
+<h3 id="the-localsettingsjson"><a class="header" href="#the-localsettingsjson">The <em>local.settings.json</em></a></h3>
+<p>The <em>local.settings.json</em> represents the <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-app-settings">App settings</a> for your local environment, which contain configuration options that affect all functions for that function app.
+These settings are accessed as environment variables.</p>
+<p>As of now the file doesn't contain too many settings.
+However, there is a setting for our language worker runtime (<code>FUNCTIONS_WORKER_RUNTIME</code>) which corresponds to the language runtime being used in your application (in our case Node).</p>
+<h3 id="the-funcignore"><a class="header" href="#the-funcignore">The <em>.funcignore</em></a></h3>
+<p>A function app may contain language-specific files and directories that shouldn't be <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-run-local#publish">published</a>.
+Excluded items are listed in the <em>.funcignore</em> file in the root directory.</p>
+<blockquote>
+<p>Note: The file already includes the directories of the dev dependencies in our package.json file and a test directory.
+If you add further dependencies, you should make sure they are listed in the <em>.funcignore</em> file.
+This is something to keep in mind as it might slow down the publishing of new versions considerably if you upload test frameworks or other unwanted (and possibly large) dependencies to Azure.</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="local-function"><a class="header" href="#local-function">Local Function</a></h1>
+<h2 id="introduction-2"><a class="header" href="#introduction-2">Introduction</a></h2>
+<p>In this chapter we will create a local function, look at its details and then start and call it.</p>
+<p>Make sure you have created a <a href="azure-functions/./1-2-local-function.html">Local Function App</a>.</p>
+<p>Commands in this chapter are to be executed in the <em>Function App</em> root directory unless stated otherwise.</p>
+<h2 id="add-a-function-to-our-function-app"><a class="header" href="#add-a-function-to-our-function-app">Add a function to our Function App</a></h2>
+<p>A function is the primary concept in Azure Functions.</p>
+<p>A function contains two important pieces:</p>
+<ul>
+<li>your code, which can be written in a variety of languages</li>
+<li>its config file called <em>function.json</em></li>
+</ul>
+<p>For scripting languages, you must provide the config file yourself.
+For compiled languages, the config file is generated automatically from annotations in your code.</p>
+<p>We can add a new one to our <em>Function App</em> with the Azure Functions Core Tools – take a look at the <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-core-tools-reference">command reference</a> for insights on the parameters:</p>
+<pre><code class="language-shell">func new --name greetings --authlevel anonymous --template &quot;HTTP Trigger&quot;
+</code></pre>
+<p>That's it!
+We've successfully added a new function 🎉!</p>
+<p>When listing the files in our <em>Function App</em> root directory, you'll see a new directory, named like our function (&quot;greetings&quot;), which contains all the files for the function itself.
+So if you want to delete a function, it's enough to remove the directory.</p>
+<blockquote>
+<p>Note: We won't go into the details of different authorization levels yet. For now use <em>anonymous</em> when you add new functions.</p>
+</blockquote>
+<h3 id="the-functionjson"><a class="header" href="#the-functionjson">The <em>function.json</em></a></h3>
+<p>The <em>function.json</em> file defines the function's trigger, bindings, and other configuration settings.
+The runtime uses this config file to determine the events to monitor and how to pass data into and return data from a function execution.</p>
+<h4 id="triggers"><a class="header" href="#triggers">Triggers</a></h4>
+<p><a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings">Triggers</a> cause a function to run.
+They define how a function is invoked and a function must have exactly one trigger.
+Triggers have associated data, which is often provided as the payload of the function.</p>
+<p>In our case we created an HTTP Trigger, so our function is triggered via HTTP requests.</p>
+<h4 id="bindings"><a class="header" href="#bindings">Bindings</a></h4>
+<p><a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings">Binding</a> to a function are a way of declaratively connecting another resource to the function.
+Bindings may be connected as input bindings, output bindings, or both.
+Data from bindings is provided to the function as parameters.</p>
+<p>Bindings are optional and a function might have one or multiple input and/or output bindings.</p>
+<h4 id="details"><a class="header" href="#details">Details</a></h4>
+<p>Browsing the contents of our <em>function.json</em> file reveals we currently have two bindings.</p>
+<details>
+  <summary>Sample function.json</summary>
+<pre><code class="language-json">{
+  &quot;bindings&quot;: [
+    {
+      &quot;authLevel&quot;: &quot;Anonymous&quot;,
+      &quot;type&quot;: &quot;httpTrigger&quot;,
+      &quot;direction&quot;: &quot;in&quot;,
+      &quot;name&quot;: &quot;req&quot;,
+      &quot;methods&quot;: [&quot;get&quot;, &quot;post&quot;]
+    },
+    {
+      &quot;type&quot;: &quot;http&quot;,
+      &quot;direction&quot;: &quot;out&quot;,
+      &quot;name&quot;: &quot;res&quot;
+    }
+  ],
+  &quot;scriptFile&quot;: &quot;../dist/greetings/index.js&quot;
+}
+</code></pre>
+</details>
+<ul>
+<li>An <code>in</code>-binding (input) named <code>req</code> of type <code>httpTrigger</code></li>
+<li>An <code>out</code>-binding (output) named <code>res</code> of type <code>http</code></li>
+</ul>
+<h3 id="the-indexts"><a class="header" href="#the-indexts">The index.ts</a></h3>
+<p>The <em>index.ts</em> was created for us from the HTTP Trigger template we specified when adding the new function.
+It contains a sample function implementation with which we'll play around in a moment.</p>
+<p>But first take a closer look at the constant called httpTrigger:</p>
+<pre><code class="language-typescript">const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise&lt;void&gt; {...}
+</code></pre>
+<p>There are some noteworthy things here:</p>
+<p>First, the function is asynchronous.
+Review the language-specific details if that has any implications for you (i. e. <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-node#contextdone-method">TypeScript</a> or <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-python#async">Python</a>)</p>
+<p>Second, the function expects two parameters:</p>
+<ul>
+<li>The first one (<code>context</code>) is language-specific, but other languages have equivalents for it. It's passed to every function and is used for receiving and sending binding data, logging, and communicating with the runtime.
+<ul>
+<li>The structure of the context object <strong>depends on</strong> the selected trigger and bindings.</li>
+</ul>
+</li>
+<li>The second one (<code>req</code>) is the http request object.
+<ul>
+<li>The name of the request object <strong>must match</strong> the name defined for the input binding in your <code>function.json</code></li>
+</ul>
+</li>
+</ul>
+<h2 id="start-the-function"><a class="header" href="#start-the-function">Start the function</a></h2>
+<p>Now we can finally start our new function with:</p>
+<pre><code class="language-shell">npx tsc &amp;&amp; func start
+</code></pre>
+<p>The command triggers the TypeScript compiler and starts the function afterwards.</p>
+<p>The output contains details on the Core Tools version and the runtime version, but more importantly we get an overview over the functions we provide, their URL and the accepted http methods.</p>
+<details>
+  <summary>Sample output</summary>
+<pre><code class="language-text">Azure Functions Core Tools
+Core Tools Version:       4.0.4915 Commit hash: N/A  (64-bit)
+Function Runtime Version: 4.14.0.19631
+
+
+Functions:
+
+        greetings: [GET,POST] http://localhost:7071/api/greetings
+
+For detailed output, run func with --verbose flag.
+</code></pre>
+</details>
+<h3 id="shutdown-the-function"><a class="header" href="#shutdown-the-function">Shutdown the function</a></h3>
+<p>To shutdown your Function App, press <code>ctrl+c</code>.</p>
+<h3 id="verbose-flag"><a class="header" href="#verbose-flag">Verbose flag</a></h3>
+<p>The <em>verbose flag</em> can be helpful if you want to get insights what the runtime is doing under the hood.</p>
+<p>Give it a try and start the function with the <em>verbose flag</em>:</p>
+<pre><code class="language-shell">npx tsc &amp;&amp; func start --verbose
+</code></pre>
+<blockquote>
+<p>Note: The verbose flag toggles only the runtime log level, but not the log level of your functions.
+We'll learn how to toggle the function log levels later, though.</p>
+</blockquote>
+<h2 id="calling-the-function"><a class="header" href="#calling-the-function">Calling the function</a></h2>
+<p>After starting the function app you can easily test it with any Rest client or open it in your <a href="http://localhost:7071/api/greetings">browser</a>:</p>
+<pre><code class="language-shell">curl http://localhost:7071/api/greetings
+</code></pre>
+<p>Or with parameters (<a href="http://localhost:7071/api/greetings?name=codecentric">browser</a>):</p>
+<pre><code class="language-shell">curl http://localhost:7071/api/greetings -d '{&quot;name&quot;:&quot;codecentric&quot;}'
+</code></pre>
+<h2 id="quiz"><a class="header" href="#quiz"><span class="quiz">Quiz</span></a></h2>
+<details>
+  <summary>What file specifies the accepted http methods for a function of type HTTP Trigger?</summary>
+<p>Every function has it's dedicated settings file called <em>function.json</em>.</p>
+</details>
+<br/>
+<details>
+  <summary>What error code does the Function send if you called it with an unspecified http method?</summary>
+<p>It responds with <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404">404 Not Found</a>.</p>
+<p>Test command:</p>
+<pre><code class="language-shell">curl -X OPTION http://localhost:7071/api/greetings -v
+</code></pre>
+</details>
+<br/>
+<details>
+  <summary>Can you see error messages in the Function console output? Does the output change if you use the verbose flag to start the Function?</summary>
+<p>The console output does indeed not show unsuccessful attempts to call the function.
+That changes, however, if we restart the Function with the verbose flag.</p>
+<p>Test command:</p>
+<pre><code class="language-shell">curl -X OPTION http://localhost:7071/api/greetings -v
+</code></pre>
+</details>
+<br/>
+<details>
+  <summary>Are there function bindings for Kafka? If so, which runtime version is supported? Are in, out or both binding types supported?</summary>
+<p>Take a look at the <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-triggers-bindings#supported-bindings">documentation</a>.</p>
+<p>As you can see Kafka is supported since runtime version 2.x.
+Furthermore, only output bindings are supported.</p>
+</details>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="azure-function-app"><a class="header" href="#azure-function-app">Azure Function App</a></h1>
+<h2 id="introduction-3"><a class="header" href="#introduction-3">Introduction</a></h2>
+<p>After successfully creating a local Function App and getting our first function up and running, it is now time to create a Function App in Azure.</p>
+<p>The Azure resources will be created using a <a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview">Bicep</a> template (you don't need to install any additional software).</p>
+<h2 id="login-to-your-azure-account"><a class="header" href="#login-to-your-azure-account">Login to your Azure account</a></h2>
+<p>First we need to log in to our Azure account with the Azure CLI.</p>
+<p>Login the Azure CLI:</p>
+<pre><code class="language-shell">az login
+</code></pre>
+<details>
+  <summary>Sample output</summary>
+<pre><code class="language-text">A web browser has been opened at https://login.microsoftonline.com/organizations/oauth2/v2.0/authorize.
+Please continue the login in the web browser.
+If no web browser is available or if the web browser fails to open, use device code flow with `az login --use-device-code`.
+Opening in existing browser session.
+[
+  {
+    &quot;cloudName&quot;: &quot;AzureCloud&quot;,
+    &quot;homeTenantId&quot;: &quot;some-tenant-uuid&quot;,
+    &quot;id&quot;: &quot;your-subscription-uuid&quot;,
+    &quot;isDefault&quot;: true,
+    &quot;managedByTenants&quot;: [],
+    &quot;name&quot;: &quot;you@sample.com&quot;,
+    &quot;state&quot;: &quot;Enabled&quot;,
+    &quot;tenantId&quot;: &quot;some-tenant-uuid&quot;,
+    &quot;user&quot;: {
+      &quot;name&quot;: &quot;you@sample.com&quot;,
+      &quot;type&quot;: &quot;user&quot;
+    }
+  }
+]
+</code></pre>
+</details>
+<blockquote>
+<p>Note: If you have more than one subscription, use <code>az account</code> (list / set) to switch to the one you want to use.</p>
+</blockquote>
+<h2 id="create-a-new-resource-group"><a class="header" href="#create-a-new-resource-group">Create a new Resource Group</a></h2>
+<p>A <a href="https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/overview#resource-groups">resource group</a> is a container that holds related resources for an Azure solution.</p>
+<p>You might want to change the location for the created resources to something close to you.</p>
+<p>Check what locations are eligible with:</p>
+<pre><code class="language-shell">az account list-locations --query &quot;[].name&quot;
+</code></pre>
+<p>Create one with:</p>
+<pre><code class="language-shell">az group create --name rg-functions-demo --location westeurope
+</code></pre>
+<blockquote>
+<p>Note: It might take a while for the resources to show up in Azure Portal.</p>
+</blockquote>
+<h2 id="creating-the-demo-resources"><a class="header" href="#creating-the-demo-resources">Creating the demo resources</a></h2>
+<p>The resources will be created in the same location you used for the resource group.
+However, not all resources are available for every resource.
+You can look up which products are available in which location <a href="https://azure.microsoft.com/en-us/explore/global-infrastructure/products-by-region/">here</a>.</p>
+<p>Download the template file from <a href="azure-functions/./functions-demo.bicep">here</a>.</p>
+<p>Create the resources with:</p>
+<pre><code class="language-shell">az deployment group create --resource-group rg-functions-demo --template-file functions-demo.bicep
+</code></pre>
+<p>The following resources will be created:</p>
+<ul>
+<li>A <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-overview">Function App</a> is a serverless solution that allows you to implement your system's logic into readily available blocks of code.</li>
+<li>A <a href="https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview">Storage Account</a> contains all of your Azure Storage data objects, including blobs, file shares, queues, tables, and disks. In our case it's providing storage for our Function App.</li>
+<li>An <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview">Application Insights instance</a> is an extension of Azure Monitor and provides Application Performance Monitoring (also known as “APM”) features.</li>
+<li>An <a href="https://learn.microsoft.com/en-us/azure/app-service/overview-hosting-plans">App Service plan</a> defines a set of compute resources for a web app to run. In our case it provides the execution environment for our functions.</li>
+</ul>
+<blockquote>
+<p>Note: If you use an <a href="https://learn.microsoft.com/en-us/azure/azure-functions/supported-languages">alternate language</a> you need to update the Bicep template accordingly.</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="deploying-your-app-to-azure"><a class="header" href="#deploying-your-app-to-azure">Deploying your App to Azure</a></h1>
+<h2 id="introduction-4"><a class="header" href="#introduction-4">Introduction</a></h2>
+<p>Now that we've created our Azure Resources, it's time to deploy our local Function App to its Azure counterpart.</p>
+<p>Commands in this chapter are to be executed in the <em>Function App</em> root directory unless stated otherwise.</p>
+<h2 id="deployment-best-practices"><a class="header" href="#deployment-best-practices">Deployment best practices</a></h2>
+<p>When deploying a Function App, it's important to keep in mind that the unit of deployment for functions in Azure is the Function App.
+Meaning, all functions are deployed at the same time, usually from the same <a href="https://learn.microsoft.com/en-us/azure/azure-functions/run-functions-from-deployment-package">deployment package</a>.</p>
+<p>Check out the <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-best-practices?tabs=csharp#optimize-deployments">best practices documentation</a> for further insights.</p>
+<p>Also, think about if you have added new items to your Function App and if you need to update your <a href="azure-functions/./1-1-local-function-app.html#the-funcignore">.funcignore</a> before deploying.</p>
+<h2 id="deploying-the-function-app"><a class="header" href="#deploying-the-function-app">Deploying the Function App</a></h2>
+<p>Our Function App can be deployed with a single command.
+However, before we can execute it, we need to know the name of our Function App created by the Bicep template.</p>
+<p>Look up the name:</p>
+<pre><code class="language-shell">az resource list --resource-group rg-functions-demo --query &quot;[?kind=='functionapp,linux'].name&quot;
+</code></pre>
+<p>Afterwards deploy your Function App with:</p>
+<pre><code class="language-shell">func azure functionapp publish &lt;APP_NAME&gt;
+</code></pre>
+<details>
+  <summary>Sample output</summary>
+<pre><code class="language-text">Getting site publishing info...
+Creating archive for current directory...
+Uploading 427.34 KB [#############################################################################]
+Upload completed successfully.
+Deployment completed successfully.
+</code></pre>
+</details>
+<blockquote>
+<p>Note: This might take a minute or two depending on your compute resources and internet connection.</p>
+</blockquote>
+<h3 id="testing-your-deployment"><a class="header" href="#testing-your-deployment">Testing your deployment</a></h3>
+<p>After our deployment completed successfully, we'll now test if everything works as expected.</p>
+<p>Query the enabled host names for your Function App with:</p>
+<pre><code class="language-shell">az functionapp show --resource-group rg-functions-demo --name &lt;APP_NAME&gt; --query &quot;defaultHostName&quot;
+</code></pre>
+<p>As Azure Websites get a default custom Domain name, where the application name is the third level of the domain name followed by <code>.azurewebsites.net</code>.
+That is also true for Azure Functions as they are treated as Websites.
+Furthermore the domain has a valid wildcard certificate, so we can call our resources via <em>https</em>.</p>
+<p>From our local tests we also know that our functions are located in the <code>api</code> subdirectory followed by the function name.</p>
+<p>So, your URL should look like:</p>
+<pre><code class="language-text">https://&lt;APP_NAME&gt;.azurewebsites.net/api/greetings
+</code></pre>
+<blockquote>
+<p>Note: We don't need to specify a port, because the site listens on the default https port.</p>
+</blockquote>
+<h4 id="-task-optional-call-the-greetings-api"><a class="header" href="#-task-optional-call-the-greetings-api"><span class="task">🛠 TASK (optional):</span> Call the greetings API</a></h4>
+<p>Use the curl commands introduced in the chapter <a href="azure-functions/./1-2-local-function.html">Local Functions</a> or any other REST client to test the API.</p>
+<details>
+  <summary>💡 HINT</summary>
+<ul>
+<li>Look up the function name, as done above, and replace <code>&lt;function-app-name&gt;</code> in the url with it</li>
+<li>Make sure to use <strong>https</strong> instead of <em>http</em> for non-local calls</li>
+</ul>
+</details>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="working-with-app-settings"><a class="header" href="#working-with-app-settings">Working with App Settings</a></h1>
+<h2 id="introduction-5"><a class="header" href="#introduction-5">Introduction</a></h2>
+<p>In the previous step we deployed our Function App to Azure.
+We'll now take a look at the <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-app-settings">App settings</a>.</p>
+<p>Application settings in a function app contain configuration options that affect all functions for that function app.
+By default, you store connection strings and secrets used by your function app and bindings as application settings and access them as environment variables.
+However, secrets not needed by Azure to be stored as application settings should rather be stored in <a href="https://learn.microsoft.com/en-us/azure/key-vault/general/">Azure KeyVault</a> instead of the application settings.</p>
+<p>Commands in this chapter are to be executed in the <em>Function App</em> root directory unless stated otherwise.</p>
+<h2 id="fetch-the-settings-from-azure"><a class="header" href="#fetch-the-settings-from-azure">Fetch the settings from Azure</a></h2>
+<p>We learned in chapter <a href="azure-functions/./1-1-local-function-app.html#the-localsettingsjson">2.1 Local Function App</a> that our local Function App settings are stored in a file called <em>local.settings.json</em>.
+When we created our local Function App, the file was added with the minimal set of entries the runtime needs to work properly.</p>
+<p>Take a look at your local settings first:</p>
+<pre><code class="language-shell">func settings list
+</code></pre>
+<p>And compare it to the settings in Azure:</p>
+<pre><code class="language-shell">az functionapp config appsettings list --resource-group rg-functions-demo --name &lt;APP_NAME&gt;
+</code></pre>
+<p>As you can see, there are already more settings in Azure, even if we just created the app and deployed it once.
+For example, the settings for <a href="azure-functions/./1-3-azure-function-app.html#creating-the-demo-resources">Application Insights</a> were automatically set when we created the resources via Bicep.</p>
+<p>To fetch the settings from Azure we can execute:</p>
+<pre><code class="language-shell">func azure functionapp fetch-app-settings &lt;APP_NAME&gt;
+</code></pre>
+<p>After executing the command, the <em>local.settings.json</em> is updated and matches the settings in Azure.
+If the file is, for whatever reason, not found on your machine, you can still execute the command and the file will be created for you.</p>
+<h2 id="encrypting-and-decrypting"><a class="header" href="#encrypting-and-decrypting">Encrypting and decrypting</a></h2>
+<p>App settings and connection strings are stored encrypted in Azure.
+They're decrypted only before being injected into your app's process memory when the app starts.</p>
+<p>The function runtime offers the possibility to encrypt and decrypt your local settings as well, and as these settings contain sensitive information (connection strings, secrets and so on) the simple advice is to encrypt them and only decrypt them if needed.</p>
+<p>However, secrets not needed by Azure to be stored as application settings should rather be stored in <a href="https://learn.microsoft.com/en-us/azure/key-vault/general/">Azure KeyVault</a> instead of the application settings.</p>
+<p>Encrypt the settings with:</p>
+<pre><code class="language-shell">func settings encrypt
+</code></pre>
+<p>Decrypt the settings with:</p>
+<pre><code class="language-shell">func settings decrypt
+</code></pre>
+<h2 id="use-app-settings-in-functions"><a class="header" href="#use-app-settings-in-functions">Use app settings in functions</a></h2>
+<p>Application settings can be accessed in functions like every other environment variable and are accessible in every function in the same Function App.
+Let's add a new function that returns all environment variables when it's called.</p>
+<p>Add the function (use authlevel <code>function</code>):</p>
+<pre><code class="language-shell">func new --name settings --authlevel function --template &quot;HTTP Trigger&quot;
+</code></pre>
+<p>Update the code to return all environment variables (snippet):</p>
+<pre><code class="language-typescript">const httpTrigger: AzureFunction = async function (
+  context: Context,
+  req: HttpRequest
+): Promise&lt;void&gt; {
+  context.res = {
+    // this will return all environment variables
+    body: process.env,
+  };
+};
+</code></pre>
+<p>Now start the Function App and call the settings endpoint.
+Interestingly you'll see not just the settings from the <em>local.settings.json</em> but also quite a lot that the runtime added by itself.
+Don't use environment variables not configured in <em>local.settings.json</em> in your function, however, because they aren't guaranteed.</p>
+<blockquote>
+<p>Note: As application settings contain sensitive information you usually wouldn't return them like we did here and just use what's necessary where it's necessary in your functions.</p>
+</blockquote>
+<h3 id="-task-optional-deploy-the-function-app"><a class="header" href="#-task-optional-deploy-the-function-app"><span class="task">🛠 TASK (optional):</span> Deploy the Function App</a></h3>
+<p>Deploy the function app like you did in the <a href="azure-functions/./1-4-deploying-local-to-azure.html#deploying-the-function-app">previous chapter</a> and call the new settings endpoint.
+You'll see that you won't get any output, but instead a <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401">401 Unauthorized</a> response.
+That's because we configured the authorization level to be <em>function</em>.</p>
+<p>We'll learn how to call that function in a later chapter.
+For now we can just leave it like that as we made sure nobody besides us can call it.</p>
+<blockquote>
+<p>Note: If you missed to create the function with authorization level set to <code>function</code>, just update the <code>authLevel</code> to <code>function</code> in the <em>function.json</em> and redeploy the Function App.</p>
+</blockquote>
+<h2 id="quiz-1"><a class="header" href="#quiz-1"><span class="quiz">Quiz</span></a></h2>
+<details>
+  <summary>Can the functions still be started if you delete the <span class="italic">local.settings.json?</span></summary>
+<p>The Function App can still be executed, even though you'll get a warning:</p>
+<pre><code class="language-text">Can't determine project language from files. Please use one of [--csharp, --javascript, --typescript, --java, --python, --powershell, --custom]
+</code></pre>
+<p>Using the specific language parameter the warning disappears:</p>
+<pre><code class="language-shell">npx tsc &amp;&amp; func start --typescript
+</code></pre>
+<p>But only the basic environment variables will be available like that.
+Refetch them from Azure before you continue.</p>
+</details>
+<br/>
+<details>
+  <summary>What alternate secrets store should you consider for sensitive information instead of application settings?</summary>
+<p><a href="https://learn.microsoft.com/en-us/azure/key-vault/general/">Azure KeyVault</a> is a secure alternative if your secrets are not required to be stored as application settings by Azure.</p>
+</details>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="adding-health-checks"><a class="header" href="#adding-health-checks">Adding health checks</a></h1>
+<h2 id="introduction-6"><a class="header" href="#introduction-6">Introduction</a></h2>
+<p>In this chapter we're going to add basic health check functionality to our Function App, which you can use to implement <a href="https://learn.microsoft.com/en-us/azure/service-health/resource-health-overview">Azure Service Health alerts</a> (not part of this training).</p>
+<p>The hosting infrastructure for Azure Functions is provided by <a href="https://learn.microsoft.com/en-us/azure/app-service/overview">Azure App Service</a>.
+Therefore the documentation for <a href="https://learn.microsoft.com/en-us/azure/app-service/monitor-instances-health-check">health checks</a> is found in the Azure App Service documentation rather then for Azure Functions.</p>
+<p>The Health Check feature can be used to monitor Function Apps on the Premium (Elastic Premium) and Dedicated (App Service) plans only.
+It's not an option for the Consumption plan, however, as the runtime for these Function Apps is only available when functions are called.</p>
+<p>Commands in this chapter are to be executed in the <em>Function App</em> root directory unless stated otherwise.</p>
+<h2 id="creating-a-health-check-endpoint"><a class="header" href="#creating-a-health-check-endpoint">Creating a health check endpoint</a></h2>
+<p>Reading the <a href="https://learn.microsoft.com/en-us/azure/app-service/monitor-instances-health-check#what-app-service-does-with-health-checks">documentation</a>, we learn that creating an health check endpoint is rather simple.</p>
+<ul>
+<li>our Function App needs an endpoint that returns HTTP status code 200 if everything is fine and 500 otherwise</li>
+<li>the default path for that endpoint is called <em>health</em></li>
+</ul>
+<p>We also learn that health checks are usually used as an interface to probe other services our Function App depends on, like databases and so on.
+As we have no database available we need to substitute it.</p>
+<p>But let's take one step at a time.</p>
+<h3 id="-task-create-the-endpoint"><a class="header" href="#-task-create-the-endpoint"><span class="task">🛠 TASK:</span> Create the endpoint</a></h3>
+<p>As you have done before, create a new function called <code>health</code> with authorization level <code>anonymous</code>.</p>
+<details>
+  <summary>💡 HINT</summary>
+<p>We already create a function like that <a href="azure-functions/./1-2-local-function.html#add-a-function-to-our-function-app">before</a>.</p>
+</details>
+<br/>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<pre><code class="language-shell">func new --name health --authlevel anonymous --template &quot;HTTP Trigger&quot;
+</code></pre>
+</details>
+<h3 id="-task-update-the-implementation"><a class="header" href="#-task-update-the-implementation"><span class="task">🛠 TASK:</span> Update the implementation</a></h3>
+<p>As of now we don't have a bad path option, so let's just implement the <a href="https://en.wikipedia.org/wiki/Happy_path">happy path</a> first.
+We want to return HTTP status code 200.</p>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Update the code (snippet):</p>
+<pre><code class="language-typescript">const httpTrigger: AzureFunction = async function (
+  context: Context,
+  req: HttpRequest
+): Promise&lt;void&gt; {
+  context.res = {
+    status: 200,
+  };
+};
+</code></pre>
+</details>
+<h3 id="-task-deploy-the-function-app"><a class="header" href="#-task-deploy-the-function-app"><span class="task">🛠 TASK:</span> Deploy the Function App</a></h3>
+<p>Let's deploy the Function App before we continue.</p>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Look up the name:</p>
+<pre><code class="language-shell">az resource list --resource-group rg-functions-demo --query &quot;[?kind=='functionapp,linux'].name&quot;
+</code></pre>
+<p>Afterwards deploy your Function App with:</p>
+<pre><code class="language-shell">func azure functionapp publish &lt;APP_NAME&gt;
+</code></pre>
+</details>
+<h3 id="-task-update-the-health-check-settings"><a class="header" href="#-task-update-the-health-check-settings"><span class="task">🛠 TASK:</span> Update the health check settings</a></h3>
+<p>Azure Functions won't automatically probe the health endpoint just because there's an implementation.
+So we need to update our Function App in order to make use of it.</p>
+<p>Update the health check settings with:</p>
+<pre><code class="language-shell">az webapp config set --resource-group rg-functions-demo --name &lt;APP_NAME&gt; --generic-configurations '{&quot;healthCheckPath&quot;: &quot;/api/health/&quot;}'
+</code></pre>
+<blockquote>
+<p>Note: In a real world scenario we wouldn't execute the command like that.
+Instead we would update our IaC template (bicep, terraform, you name it).
+However, you might have changed your Function App because you tested something or you're using an alternate language and updated the template and we might end up breaking your Function App if we would use an updated template – that's why we don't.</p>
+</blockquote>
+<h3 id="-task-optional-monitor-the-health-check-status"><a class="header" href="#-task-optional-monitor-the-health-check-status"><span class="task">🛠 TASK (optional):</span> Monitor the health check status</a></h3>
+<p>Before you can start monitoring the health check status of your Function App, you should take a little break, because it'll take a while before any metric is available.</p>
+<p>So wait for at least 5 Minutes before you execute:</p>
+<pre><code class="language-shell">az monitor metrics list --resource-group rg-functions-demo --resource-type &quot;Microsoft.Web/sites&quot; --metric &quot;HealthCheckStatus&quot; --interval 5m --output table --resource &lt;APP_NAME&gt;
+</code></pre>
+<details>
+  <summary>Sample output</summary>
+<p>The Average column might be empty if no metric was recorded before.</p>
+<pre><code class="language-text">Timestamp            Name                 Average
+-------------------  -------------------  ---------
+2023-01-31 11:17:00  Health check status
+2023-01-31 11:22:00  Health check status
+2023-01-31 11:27:00  Health check status
+2023-01-31 11:32:00  Health check status
+2023-01-31 11:37:00  Health check status
+2023-01-31 11:42:00  Health check status
+2023-01-31 11:47:00  Health check status
+2023-01-31 11:52:00  Health check status
+2023-01-31 11:57:00  Health check status
+2023-01-31 12:02:00  Health check status  33.333333333333336
+2023-01-31 12:07:00  Health check status  100.0
+2023-01-31 12:12:00  Health check status  100.0
+</code></pre>
+</details>
+<blockquote>
+<p>Note: The output from the monitor command depends on the interval and the execution time.
+So depending on what interval you choose and what time you execute it you might get different results.
+If you want results based on a specific start time, you can set the <code>--start-time</code> parameter.
+Take a look at the <a href="https://learn.microsoft.com/en-us/cli/azure/monitor/metrics?view=azure-cli-latest#az-monitor-metrics-list">az monitor metrics</a> documentation for further options.</p>
+</blockquote>
+<h3 id="-task-prepare-the-unhappy-path"><a class="header" href="#-task-prepare-the-unhappy-path"><span class="task">🛠 TASK:</span> Prepare the unhappy path</a></h3>
+<p>As already mentioned, we don't have any database or other alternate service available which we could use to test our health check against.</p>
+<p>So we're going to implement a function that allows us to toggle an environment variable to either true or false.
+Afterwards we can use that environment variable in our health check to toggle its state.</p>
+<p>Create a function called <code>toggles</code> and implement it with the following traits:</p>
+<ul>
+<li>the API expects either the <em>query</em> or the <em>body</em> to contain a variable called <code>toggle</code></li>
+<li>create a switch for that toggle</li>
+<li>the switch either knows the toggle and toggles its value or it returns an HTTP status code 400</li>
+<li>the toggle for the health state is called <code>isHealthy</code> and will toggle an environment variable called <code>TOGGLE_IS_HEALTHY</code></li>
+<li>valid values for the environment variable are <code>&quot;true&quot;</code> or <code>&quot;false&quot;</code></li>
+<li>if the environment variable is not undefined, default to <code>&quot;false&quot;</code></li>
+<li>respond with HTTP status code 200 and a message which value was toggled</li>
+</ul>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Create the function with:</p>
+<pre><code class="language-shell">func new --name toggles --authlevel anonymous --template &quot;HTTP Trigger&quot;
+</code></pre>
+<p>Update the code (snippet):</p>
+<pre><code class="language-typescript">const httpTrigger: AzureFunction = async function (
+  context: Context,
+  req: HttpRequest
+): Promise&lt;void&gt; {
+  const toggle = req.query.toggle || (req.body &amp;&amp; req.body.toggle);
+  var responseStatus = 200;
+  var responseMessage = &quot;&quot;;
+
+  context.log(`Toggling: ${toggle}`);
+
+  switch (toggle) {
+    case &quot;isHealthy&quot;:
+      if (process.env.TOGGLE_IS_HEALTHY == &quot;false&quot;) {
+        process.env.TOGGLE_IS_HEALTHY = &quot;true&quot;;
+      } else {
+        process.env.TOGGLE_IS_HEALTHY = &quot;false&quot;;
+      }
+      responseMessage = `Toggled ${toggle} to ${process.env.TOGGLE_IS_HEALTHY}`;
+      break;
+    default:
+      context.log.error(`Unknown toggle: ${toggle}`);
+      responseStatus = 400;
+      break;
+  }
+
+  context.res = {
+    status: responseStatus,
+    body: responseMessage,
+  };
+};
+</code></pre>
+</details>
+<h3 id="-task-update-the-health-check-function"><a class="header" href="#-task-update-the-health-check-function"><span class="task">🛠 TASK:</span> Update the health check function</a></h3>
+<p>Now that we can toggle our environment variable using a simple API called, it's time to use that variable in our health check function.</p>
+<p>Update the function to respond with HTTP status code 500 if <code>process.env.TOGGLE_IS_HEALTHY</code> is <code>&quot;false&quot;</code>, otherwise respond with HTTP status code 200.</p>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Update the code (snippet):</p>
+<pre><code class="language-typescript">const httpTrigger: AzureFunction = async function (
+  context: Context,
+  req: HttpRequest
+): Promise&lt;void&gt; {
+  const responseStatus = process.env.TOGGLE_IS_HEALTHY == &quot;false&quot; ? 500 : 200;
+  context.res = {
+    status: responseStatus,
+  };
+};
+</code></pre>
+</details>
+<h3 id="-task-optional-deploy-toggle-and-monitor-the-health-status"><a class="header" href="#-task-optional-deploy-toggle-and-monitor-the-health-status"><span class="task">🛠 TASK (optional):</span> Deploy, Toggle and Monitor the health status</a></h3>
+<p>You can now deploy your Function App as well as toggle and monitor the health status.
+Remember, though, it might take a while till the status is available.</p>
+<p>You can also use <a href="https://learn.microsoft.com/en-us/azure/service-health/resource-health-overview">Azure Service Health alerts</a> to monitor your Function App in Azure Portal.
+As this is not part of our training, remember to clean up afterwards.</p>
+<blockquote>
+<p>Note: Toggle the health state back to <code>&quot;true&quot;</code> when you're done or Azure will try to restart your Function after a while.</p>
+</blockquote>
+<h2 id="quiz-2"><a class="header" href="#quiz-2"><span class="quiz">Quiz</span></a></h2>
+<details>
+  <summary>What's the application setting <span class="italic">WEBSITE_HEALTHCHECK_MAXPINGFAILURES</span> used for and what's its default value (hint: App Service documentation)?</summary>
+<p>The default value is <strong>10</strong> and it's used to determine how many failed requests to the health check endpoint are valid, before the service is deemed unhealthy.</p>
+</details>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="working-with-logs"><a class="header" href="#working-with-logs">Working with Logs</a></h1>
+<h2 id="introduction-7"><a class="header" href="#introduction-7">Introduction</a></h2>
+<p>When it comes to logging, sadly an often undervalued topic, Azure Function Apps have quite a broad scope of different mechanisms available, including <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#streaming-logs">Streaming Logs</a>, <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#diagnostic-logs">Diagnostic Logs</a>, <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#scale-controller-logs">Scale controller logs</a> and <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#azure-monitor-metrics">Azure Monitor metrics</a>.</p>
+<p>In the last chapter we were already using Azure Monitor metrics to query information about the health check status.</p>
+<p>In this chapter, we're going to focus solely on the basics of <em>Streaming Logs</em>, which come in two flavours:</p>
+<ul>
+<li><strong>Built-in log streaming</strong> lets you view a stream of your <em>application log</em> files. This stream is equivalent to the output seen when you debug your functions during local development. This streaming method supports only a single instance and can't be used with an app running on Linux in a Consumption plan.</li>
+<li><strong>Live Metrics streaming</strong> lets you view log data and other metrics in near real time when your Function App is connected to Application Insights.</li>
+</ul>
+<p>We're also going to look into how to run only specific functions, disabling functions and so on.</p>
+<p>Commands in this chapter are to be executed in the <em>Function App</em> root directory unless stated otherwise.</p>
+<h2 id="look-under-the-hood"><a class="header" href="#look-under-the-hood">Look under the hood</a></h2>
+<p>Before we take a look at the logs, we take a little detour and talk a little about trace levels and log levels, learn the difference and write a little function to write some logs.</p>
+<h3 id="trace-levels"><a class="header" href="#trace-levels">Trace levels</a></h3>
+<p><em>Trace levels</em> define what kind of message we send to our logs stream.</p>
+<p>One of the reasons why we're focusing solely on the basics of streaming logs is because trace levels in Azure Functions depend on your <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#writing-to-logs">language of choice</a>.</p>
+<p>Nevertheless, the following four basic levels are available in most languages:</p>
+<ol>
+<li><strong>Information</strong>: should be purely informative and not looking into them on a regular basis shouldn’t result in missing any important information. These logs should have long-term value.</li>
+<li><strong>Warning</strong>: should be used when something unexpected happens, but the function can continue the work</li>
+<li><strong>Error</strong>: should be used when the function hits an issue preventing one or more functionalities from properly executing</li>
+<li><strong>Trace / Verbose</strong>: should be used for events considered to be useful during software debugging when more granular information is needed</li>
+</ol>
+<p>In <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference-node#trace-levels">Typescript / Javascript</a> we can access the logger via the context as shown in the table below.</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Trace Level</th><th style="text-align: left">Write with</th></tr></thead><tbody>
+<tr><td style="text-align: left">Information</td><td style="text-align: left"><code>context.log.info(message)</code> or <code>context.log(message)</code></td></tr>
+<tr><td style="text-align: left">Warning</td><td style="text-align: left"><code>context.log.warn(message)</code></td></tr>
+<tr><td style="text-align: left">Error</td><td style="text-align: left"><code>context.log.error(message)</code></td></tr>
+<tr><td style="text-align: left">Verbose</td><td style="text-align: left"><code>context.log.verbose(message)</code></td></tr>
+</tbody></table>
+</div>
+<p>We've already used <code>context.log</code> and if you took a closer look to the logs from the runtime process you should have already seen some of these messages.</p>
+<blockquote>
+<p>Note: Don't mistake <code>console.log</code> for <code>context.log</code>.
+Because output from <code>console.log</code> is captured at the function app level, it's not tied to a specific function invocation and isn't displayed in a specific function's logs.</p>
+</blockquote>
+<h3 id="log-levels"><a class="header" href="#log-levels">Log Levels</a></h3>
+<p><a href="https://learn.microsoft.com/en-us/azure/azure-functions/configure-monitoring#configure-log-levels">Log levels</a> define what kind of messages we want to capture in our logs.</p>
+<p>While there are only four <em>trace levels</em>, there are seven <em>log levels</em>.
+That's because the <em>trace levels</em> are language-specific, whereas the <em>log levels</em> are runtime-specific.
+The Function App runtime is written in .NET, which knows all seven levels for logs and traces.</p>
+<p>The six log levels are <em>Trace</em>, <em>Debug</em>, <em>Information</em>, <em>Warning</em>, <em>Error</em>, <em>Critical</em>, <em>None</em>, whereas <em>Trace</em> is the highest level and <em>None</em>, of course, the lowest.
+The level you choose includes all lower levels, except for <em>None</em> which will deactivate logging completely.
+So, if you choose <em>Warning</em>, for example, you would also include <em>Error</em> and <em>Critical</em> log messages.</p>
+<p>Log levels can be configured for different <a href="https://learn.microsoft.com/en-us/azure/azure-functions/configure-monitoring#configure-categories">categories</a>.
+The important ones for us right now are only <em>Function</em> and <em>default</em>, though.
+<em>Function</em> specifies the log level for your functions and <em>default</em> for all categories not configured otherwise.</p>
+<p>The log levels can be configured in the <em>host.json</em>, so on the scale of the whole Function App.
+Nevertheless, we can specify the <em>log level</em> per function and will do so in a later task.</p>
+<details>
+  <summary>Sample <span class="italic">host.json</span></summary>
+<pre><code class="language-json">{
+  &quot;version&quot;: &quot;2.0&quot;,
+  &quot;logging&quot;: {
+    &quot;applicationInsights&quot;: {
+      &quot;samplingSettings&quot;: {
+        &quot;isEnabled&quot;: true,
+        &quot;excludedTypes&quot;: &quot;Request&quot;
+      }
+    },
+    &quot;logLevel&quot;: {
+      &quot;default&quot;: &quot;Information&quot;,
+      &quot;Host.Results&quot;: &quot;Warning&quot;,
+      &quot;Function&quot;: &quot;Trace&quot;,
+      &quot;Host.Aggregator&quot;: &quot;Warning&quot;
+    }
+  },
+  &quot;extensionBundle&quot;: {
+    &quot;id&quot;: &quot;Microsoft.Azure.Functions.ExtensionBundle&quot;,
+    &quot;version&quot;: &quot;[4.0.0, 5.0.0)&quot;
+  }
+}
+</code></pre>
+</details>
+<p>As already mentioned, log levels are runtime-specific, so changing the log level (for functions) will impact all your functions.
+We'll learn how to work around that later in this chapter.</p>
+<p>Let's add the <em>log levels</em> to the table</p>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Trace Level</th><th style="text-align: left">Write with</th><th style="text-align: left">Log Level</th></tr></thead><tbody>
+<tr><td style="text-align: left">Information</td><td style="text-align: left"><code>context.log.info(message)</code> or <code>context.log(message)</code></td><td style="text-align: left">Information</td></tr>
+<tr><td style="text-align: left">Warning</td><td style="text-align: left"><code>context.log.warn(message)</code></td><td style="text-align: left">Warning</td></tr>
+<tr><td style="text-align: left">Error</td><td style="text-align: left"><code>context.log.error(message)</code></td><td style="text-align: left">Error</td></tr>
+<tr><td style="text-align: left">Verbose</td><td style="text-align: left"><code>context.log.verbose(message)</code></td><td style="text-align: left">Trace</td></tr>
+</tbody></table>
+</div>
+<p>The only surprise here is that <em>Verbose</em> correlates to <em>Trace</em>, not to <em>Debug</em> as one might have expected.</p>
+<blockquote>
+<p>Note: The <em>host.json</em> is included when deploying the Function App, so remember to reset your settings before you deploy it.
+Or, as we do later in this chapter, overwrite the <em>host.json</em> settings in your <em>local.settings.json</em> as described <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json#override-hostjson-values">here</a>.</p>
+</blockquote>
+<h2 id="creating-a-log-function"><a class="header" href="#creating-a-log-function">Creating a log function</a></h2>
+<p>Now, we want to add a function which automatically writes log data once in a while.</p>
+<h3 id="-task-create-a-timer-trigger-function"><a class="header" href="#-task-create-a-timer-trigger-function"><span class="task">🛠 TASK:</span> Create a Timer Trigger function</a></h3>
+<p>Let's add another function to write some log messages.
+But this time we'll create a <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-timer?pivots=programming-language-javascript">Timer Trigger</a> function rather then an HTTP Trigger.</p>
+<p>A <em>Timer Trigger</em> is triggered at scheduled times.
+The schedule is defined via a <a href="https://en.wikipedia.org/wiki/Cron#Cron_expression">Cron Expressions</a> and the expression is configured in the <em>function.json</em>.</p>
+<p>If you need a verbal interpretation of a cron expression, you can use a <a href="https://crontab.cronhub.io/">cron expression generator</a> website.</p>
+<details>
+  <summary>Sample function.json</summary>
+<pre><code class="language-json">{
+  &quot;bindings&quot;: [
+    {
+      &quot;name&quot;: &quot;myTimer&quot;,
+      &quot;type&quot;: &quot;timerTrigger&quot;,
+      &quot;direction&quot;: &quot;in&quot;,
+      &quot;schedule&quot;: &quot;0 */5 * * * *&quot;
+    }
+  ],
+  &quot;scriptFile&quot;: &quot;../dist/logs/index.js&quot;
+}
+</code></pre>
+</details>
+<br/>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>The function can be easily created using the <em>Timer Trigger</em> template.
+The difference this time is, that we don't need to specify the <code>authlevel</code>, because the function is not called by an external source.</p>
+<p>Create the function with:</p>
+<pre><code class="language-shell">func new --name logs --template &quot;Timer trigger&quot;
+</code></pre>
+</details>
+<h3 id="-task-update-the-function-code"><a class="header" href="#-task-update-the-function-code"><span class="task">🛠 TASK:</span> Update the function code</a></h3>
+<p>Next, we want to update the function code to write a log message for each trace level.</p>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Update the code (snippet):</p>
+<pre><code class="language-typescript">const timerTrigger: AzureFunction = async function (
+  context: Context,
+  myTimer: any
+): Promise&lt;void&gt; {
+  const functionName = context.executionContext.functionName;
+
+  context.log.verbose(`Timer trigger: ${JSON.stringify(myTimer)}`);
+
+  context.log.info(`=&gt; Information from function &quot;${functionName}&quot;`);
+  context.log.warn(`=&gt; Warning from function &quot;${functionName}&quot;`);
+  context.log.error(`=&gt; Error from function &quot;${functionName}&quot;`);
+};
+</code></pre>
+</details>
+<h3 id="-task-configure-which-functions-to-run"><a class="header" href="#-task-configure-which-functions-to-run"><span class="task">🛠 TASK:</span> Configure which functions to run</a></h3>
+<p>The task is to start the Function App, but let it run the <em>logs</em> function only.</p>
+<p>There're two possibilities to do so, you could either <a href="https://learn.microsoft.com/en-us/azure/azure-functions/disable-function#localsettingsjson">disable</a> all other functions in the <em>local.settings.json</em>, or you could define which functions <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json#functions">to run</a> in the <em>host.json</em>.
+So it's either a <a href="https://en.wikipedia.org/wiki/Whitelist">denylist</a> or an <a href="https://en.wikipedia.org/wiki/Blacklist_(computing)">allowlist</a>.</p>
+<p>We want to use a allowlist, but we want to run just some local tests.
+So we don't want to change the <em>host.json</em> file because it's deployed to Azure.
+Therefore, we need a possibility to <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json#override-hostjson-values">overwrite</a> <em>host.json</em> configuration locally.</p>
+<p>Check out the <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json">documentation</a> and create an allowlist, including only the <em>logs</em> function.</p>
+<p>Start the function, after changing the settings, to see the log messages.
+Depending on how patient, or rather how impatient you are, you might also want to update the cron schedule to run the function more often, or take a little break.</p>
+<details>
+  <summary>💡 HINT</summary>
+<ul>
+<li>You need overwrite host settings for <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json#functions">functions</a></li>
+<li>Overwritten host settings always start with <code>AzureFunctionsJobHost</code></li>
+<li>Next you need to follow the <code>json</code> path to the specific setting and replace every opening curly bracket (<code>{</code>) with tow underscores (<code>__</code>)</li>
+<li>The settings for <code>function</code> is an array and arrays are are numbered starting with <em>zero</em> (<code>0</code>)</li>
+</ul>
+</details>
+<br/>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Update the <em>local.settings.json</em> with:</p>
+<pre><code class="language-shell">func settings add &quot;AzureFunctionsJobHost__functions__0&quot; &quot;logs&quot;
+</code></pre>
+<p>For the sake of completion, disabling functions can be done with:</p>
+<pre><code class="language-shell"># Noteworthy is the difference on the first level.
+# Function settings are overwritten starting with &quot;AzureWebJobs&quot;.&quot;FunctionName&quot;...
+func settings add &quot;AzureWebJobs.greetings.Disabled&quot; &quot;true&quot;
+</code></pre>
+</details>
+<blockquote>
+<p>Note: Some types of logging buffer write to the log file, which can result in out of order events in the stream.</p>
+</blockquote>
+<h3 id="-task-update-the-log-level"><a class="header" href="#-task-update-the-log-level"><span class="task">🛠 TASK:</span> Update the log level</a></h3>
+<p>As you've seen in the previous task, the logs don't contain the verbose messages yet.</p>
+<p>Update the <em>log level</em> to trace for our <code>logs</code> function, but not for any other function.</p>
+<details>
+  <summary>💡 HINT</summary>
+<ul>
+<li>You need overwrite host settings for <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-host-json#logging">logging</a></li>
+<li>See the answer of the previous task for further details how to do so</li>
+</ul>
+</details>
+<br/>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Update the <em>host.json</em> (snippet):</p>
+<pre><code class="language-json">{
+  &quot;version&quot;: &quot;2.0&quot;,
+  &quot;logging&quot;: {
+    &quot;applicationInsights&quot;: {
+      ...
+    },
+    &quot;logLevel&quot;: {
+      &quot;Function.logs&quot;: &quot;Trace&quot;,
+    }
+  },
+  &quot;extensionBundle&quot;: {
+    ...
+  }
+}
+</code></pre>
+<p>For the sake of completion, updating the <em>local.settings.json</em> could be done with:</p>
+<pre><code class="language-shell">func settings add &quot;AzureFunctionsJobHost__logging__LogLevel__Function.logs&quot; &quot;Trace&quot;
+</code></pre>
+</details>
+<h2 id="streaming-logs"><a class="header" href="#streaming-logs">Streaming logs</a></h2>
+<p>At long last, our logs function automatically writes some logs we can work with.
+Let's get into it!</p>
+<h3 id="built-in-log-streaming"><a class="header" href="#built-in-log-streaming">Built-in log streaming</a></h3>
+<p>Built-in log streaming lets you view a stream of your <em>application log</em> files.
+This is not yet supported for Linux apps in the Consumption plan.</p>
+<p>However, that's not an issue for us, because we're luckily using an <a href="https://learn.microsoft.com/en-us/azure/app-service/overview-hosting-plans">App Service plan</a> to run our functions.</p>
+<p>Use the <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-core-tools-reference#func-azure-functionapp-logstream">logstream command</a> to show your Function App logs on the command line:</p>
+<pre><code class="language-shell">func azure functionapp logstream &lt;APP_NAME&gt;
+</code></pre>
+<p>Wait for a moment, until you get the message:</p>
+<pre><code class="language-text">Starting Live Log Stream ---
+</code></pre>
+<p>Finally, publish your Function App to Azure.</p>
+<p>You'll see some messages like:</p>
+<pre><code class="language-text">[INFO]  Starting OpenBSD Secure Shell server: sshd.
+[INFO]  Hosting environment: Production
+[INFO]  Content root path: /azure-functions-host
+[INFO]  Now listening on: http://[::]:80
+[INFO]  Application started. Press Ctrl+C to shut down.
+No new trace in the past 1 min(s).
+</code></pre>
+<p>These logs only show messages written by the Function App itself, but not for a specific function.</p>
+<p>So let's stop the execution with <code>Ctrl+c</code> and move on.</p>
+<h3 id="live-metrics-streaming"><a class="header" href="#live-metrics-streaming">Live Metrics streaming</a></h3>
+<p><a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/live-stream">Live Metrics streaming</a> lets you view log data and other metrics in near real time.
+However, it only works for Function Apps connected to Application Insights.
+And, as you might have guessed, we already did that.</p>
+<p>You can start the live metrics view with:</p>
+<pre><code class="language-shell">func azure functionapp logstream &lt;APP_NAME&gt; --browser
+</code></pre>
+<p>The command will open the the live metrics view for your function app in your browser and you can see your incoming requests as well as the messages from our <code>logs</code> function.</p>
+<blockquote>
+<p>Note: The browser view might fail with <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/live-stream#data-is-temporarily-inaccessible-status-message">Data is temporarily inaccessible</a>.
+Try to deactivate your ad blocker, cookie blocker and so on for <code>portal.azure.com</code> and it should work as expected.</p>
+</blockquote>
+<h3 id="query-application-insights"><a class="header" href="#query-application-insights">Query Application Insights</a></h3>
+<p>As final step in this chapter we want to query our log messages from <a href="https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview">Application Insights</a>.</p>
+<p>You can use either the <a href="https://learn.microsoft.com/en-us/cli/azure/monitor/app-insights#az-monitor-app-insights-query">query</a> command, or the <a href="https://learn.microsoft.com/en-us/cli/azure/monitor/app-insights/events#az-monitor-app-insights-events-show">events show</a> command to receive messages for your instance.</p>
+<p>Let's look at both options in detail.</p>
+<blockquote>
+<p>Note: New messages are not instantly displayed in Application Insights.
+You need to wait a couple of minutes for messages to be available.</p>
+</blockquote>
+<h4 id="-task-optional-query-your-instance-name"><a class="header" href="#-task-optional-query-your-instance-name"><span class="task">🛠 TASK (optional):</span> Query your instance name</a></h4>
+<p>You can skip this one if you didn't change the name of your Application Insights instance when you created our Azure resources.</p>
+<p>If you changed the name, query it and replace <code>ains-training-demo</code> with your <code>&lt;INSTANCE_NAME&gt;</code> in the commands below.</p>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Query the name of your Application Insights instance:</p>
+<pre><code class="language-shell">az resource list --resource-group rg-functions-demo --query &quot;[?type=='Microsoft.Insights/components'].name&quot;
+</code></pre>
+</details>
+<h4 id="using-query"><a class="header" href="#using-query">Using query</a></h4>
+<p>The command uses the <a href="https://learn.microsoft.com/en-us/azure/data-explorer/kusto/query/">Kusto Query Language (KQL)</a>, which you can use in <a href="https://portal.azure.com">Azure Portal</a> for Azure Monitor as well as Azure Data Explorer.</p>
+<p>Take the latest 2 results within the last 5 minutes with:</p>
+<pre><code class="language-shell">az monitor app-insights query --resource-group rg-functions-demo --app ains-training-demo --analytics-query 'traces | sort by timestamp desc | take 2' --offset 5m
+</code></pre>
+<p>The output is one or more tables represented as <a href="https://www.json.org">JSON</a>.
+It's very powerful, but the output on the command line is not optimal for further processing.</p>
+<p>When it comes to our trace levels, you can find the messages for a specific level by querying for the specific <a href="https://learn.microsoft.com/en-us/dotnet/api/microsoft.applicationinsights.datacontracts.severitylevel">severityLevel</a>.</p>
+<p>We can query our verbose messages during the last 10 minutes with:</p>
+<pre><code class="language-shell">az monitor app-insights query --resource-group rg-functions-demo --app ains-training-demo --analytics-query 'traces | where severityLevel == 0 and operation_Name has &quot;logs&quot; | project message, timestamp | sort by timestamp desc' --offset 10m
+</code></pre>
+<p>You will see some of your <code>Timer trigger</code> messages written with <code>context.log.verbose(message)</code>.
+If you updated the <em>host.json</em> to log verbose messages for the <code>logs</code> function, that is.</p>
+<h4 id="using-events-show"><a class="header" href="#using-events-show">Using events show</a></h4>
+<p>The command can be used with the global <code>--query</code> parameter to filter the messages.
+It uses a <a href="https://jmespath.org/">JMESPath query string</a> to filter the messages.</p>
+<p>List messages from the last 5 minutes with:</p>
+<pre><code class="language-shell">az monitor app-insights events show --resource-group rg-functions-demo --app ains-training-demo --type traces --offset 5m
+</code></pre>
+<p>We can queries our verbose messages, during the last 10 minutes with:</p>
+<pre><code class="language-shell">az monitor app-insights events show --resource-group rg-functions-demo --app ains-training-demo --type traces --offset 10m --query &quot;value[?operation.name=='logs'].[trace, timestamp]&quot;
+</code></pre>
+<blockquote>
+<p>Note: A recommended alternative, especially if you work with more CLIs using JSON as output format, is using <a href="https://github.com/stedolan/jq">jq</a> and <a href="https://github.com/sharkdp/bat">bat</a>.
+It's more fun with these two extraordinary tools.</p>
+</blockquote>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="basic-function-security"><a class="header" href="#basic-function-security">Basic Function Security</a></h1>
+<h2 id="introduction-8"><a class="header" href="#introduction-8">Introduction</a></h2>
+<p>The aim of this chapter is to give you an understanding of the most fundamental security mechanisms of Azure Functions, or more specific, on how to use <a href="https://learn.microsoft.com/en-us/azure/azure-functions/security-concepts#function-access-keys">Function Access Keys</a>.</p>
+<p>Azure Function security in general is a much broader topic, which we can't possibly explain in its entirety in this training.
+That said, I strongly encourage you to read the whole documentation of Azure Functions <a href="https://learn.microsoft.com/en-us/azure/azure-functions/security-concepts">security concepts</a> after completing this chapter.</p>
+<p>Commands in this chapter are to be executed in the <em>Function App</em> root directory unless stated otherwise.</p>
+<h2 id="function-access-keys"><a class="header" href="#function-access-keys">Function Access Keys</a></h2>
+<p>As the name implies, Function Access Keys can be used to secure your functions in a manner where your requests must include an API access key in the request.
+Unless the HTTP access level on an HTTP triggered function is set to anonymous, that is.</p>
+<p>They're good enough for trainings, demos, or development purposes but shouldn't be used in <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger#secure-an-http-endpoint-in-production">production</a>.</p>
+<p>Nevertheless they are the default security mechanisms Azure Functions provide and that's why we're learning about them.
+In fact, we already used Function Access keys back in <a href="azure-functions/./1-5-working-with-app-settings.html#use-app-settings-in-functions">Chapter 2.5</a>, were we created a function with authorization level <code>function</code>, and they're also the reason why we created most of our functions with authorization level <code>anonymous</code>.</p>
+<p>So, as you might have already guessed, authorization levels are coupled to access keys.</p>
+<p>Possible authorization levels are:</p>
+<ul>
+<li><code>anonymous</code>: functions can be called without providing an API access key.</li>
+<li><code>function</code>: functions can be called providing an API access key of scope <em>Function</em> or <em>Host</em>.</li>
+<li><code>admin</code>: functions can be called providing an API access key of scope <em>Admin</em>.</li>
+</ul>
+<p>Possible key scopes are:</p>
+<ul>
+<li><strong>Function</strong>: These keys apply only to the specific functions under which they're defined.</li>
+<li><strong>Host</strong>: These keys apply to all functions within the Function App (host-level).</li>
+<li><strong>Admin</strong>: Each Function App also has an admin-level host key. In addition to providing host-level access to all functions in the app, the master key also provides administrative access to the runtime REST APIs.</li>
+<li><strong>System</strong>: These keys are required by certain function extensions and the scope of system keys is determined by the extension, but it generally applies to the entire function app (host-level).</li>
+</ul>
+<p>As a developer you'll most likely use authorization level <code>function</code> with either key scope <code>Function</code> or <code>Host</code>.</p>
+<h2 id="list-function-app-keys"><a class="header" href="#list-function-app-keys">List Function App keys</a></h2>
+<p>Let's take a look at the keys our Function App provides:</p>
+<pre><code class="language-shell">az functionapp keys list --resource-group rg-functions-demo --name &lt;APP_NAME&gt;
+</code></pre>
+<detail>
+    <summary>Sample output</summary>
+<pre><code class="language-json">{
+  &quot;functionKeys&quot;: {
+    &quot;default&quot;: &quot;&lt;some-default-key&gt;&quot;
+  },
+  &quot;masterKey&quot;: &quot;&lt;some-master-key&gt;&quot;,
+  &quot;systemKeys&quot;: {}
+}
+</code></pre>
+</detail>
+<p>As you can see, there's only one function key and the master key so far.</p>
+<h2 id="calling-functions-using-keys"><a class="header" href="#calling-functions-using-keys">Calling functions using keys</a></h2>
+<p>Let's call our <code>settings</code> function with using anonymous and the different keys.</p>
+<p>Anonymous:</p>
+<pre><code class="language-shell">curl 'https://&lt;APP_NAME&gt;.azurewebsites.net/api/settings' -v
+</code></pre>
+<p>Using a key:</p>
+<pre><code class="language-shell">curl 'https://&lt;APP_NAME&gt;.azurewebsites.net/api/settings?code=&lt;KEY&gt;'
+</code></pre>
+<p>Using a anonymous call, the function response is <code>401 Unauthorized</code>, whereas it works as expected if we provide the key.</p>
+<h3 id="-task-optional-verify-the-admin-key-access"><a class="header" href="#-task-optional-verify-the-admin-key-access"><span class="task">🛠 TASK (optional):</span> Verify the admin key access</a></h3>
+<p>Update the <em>function.json</em> of your <code>settings</code> function, and set the authorization level to <code>admin</code> instead of <code>function</code>.</p>
+<p>Redeploy the Function App and try using the <code>function</code> key and the <code>admin</code> key for the call.</p>
+<p>What're the results?</p>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p>Update the authLevel in the <em>function.json</em> (snippet):</p>
+<pre><code class="language-json">{
+  &quot;bindings&quot;: [
+    {
+      &quot;authLevel&quot;: &quot;Admin&quot;,
+      &quot;type&quot;: &quot;httpTrigger&quot;,
+      &quot;direction&quot;: &quot;in&quot;,
+      ...
+    }
+    ...
+  ]
+}
+</code></pre>
+<p>Redeploy with:</p>
+<pre><code class="language-shell">func azure functionapp publish &lt;APP_NAME&gt;
+</code></pre>
+<p>Summary: The function key, doesn't work anymore, whereas the admin key works as expected.</p>
+</details>
+<h2 id="function-specific-keys"><a class="header" href="#function-specific-keys">Function-specific keys</a></h2>
+<p>So far, we've used a host key or the admin key, where both can access all APIs of our Function App.
+But, as we've learned above, we can also create keys for specific functions.</p>
+<p>Let's create one for our <code>greetings</code> function:</p>
+<pre><code class="language-shell">az functionapp function keys set --resource-group rg-functions-demo  --function-name greetings --key-name GreetingsKey --name &lt;APP_NAME&gt;
+</code></pre>
+<details>
+    <summary>Sample output</summary>
+<p>Output (snippet):</p>
+<pre><code class="language-json">{
+  ...
+  &quot;name&quot;: &quot;GreetingsKey&quot;,
+  &quot;resourceGroup&quot;: &quot;rg-functions-demo&quot;,
+  &quot;type&quot;: &quot;Microsoft.Web/sites/functions/keys&quot;,
+  &quot;value&quot;: &quot;&lt;your-new-key&gt;&quot;
+}
+</code></pre>
+</details>
+<p>If we list our keys again, we won't find the key we just created, because it's function-specific.</p>
+<p>We need to use the function specific <a href="https://learn.microsoft.com/en-us/cli/azure/functionapp/function/keys#az-functionapp-function-keys-list">command</a> to list the keys for a function.</p>
+<pre><code class="language-shell">az functionapp function keys list --resource-group rg-functions-demo --function-name greetings --name &lt;APP_NAME&gt;
+</code></pre>
+<blockquote>
+<p>Note: We use <code>az functionapp keys list ...</code> for the Function App, but <code>az functionapp function keys list ...</code> for a specific function.
+The keys using the first command have the <em>Host</em> scope, the keys using the second command have the <em>Function</em> scope.</p>
+</blockquote>
+<h3 id="-task-optional-verify-the-function-scope-access"><a class="header" href="#-task-optional-verify-the-function-scope-access"><span class="task">🛠 TASK (optional):</span> Verify the function scope access</a></h3>
+<p>This task contains of three easy questions.</p>
+<ol>
+<li>Using the function key, we just created, can you access the <code>greetings</code> function with it?</li>
+<li>Using the function key, we just created, can you access the <code>settings</code> function with it?</li>
+<li>Can you still access the <code>greetings</code> function with the function key if you set its authorization level to <code>admin</code>?</li>
+</ol>
+<details>
+  <summary>🎓 SOLUTION</summary>
+<p><strong>Question 1</strong>: Calling the greetings function with the key it works as expected and results in a 200 OK.
+The function should be anonymous right now, so it doesn't care about the key at all.</p>
+<p><strong>Question 2</strong>: As one would expect it results in 401 Unauthorized.
+Again nothing unexpected because the key is not valid for the settings function.</p>
+<p><strong>Question 3</strong>: This results in 401 Unauthorized because a function with authorization level admin can only be called using the master key.</p>
+</details>
+<div style="break-before: page; page-break-before: always;"></div><h1 id="cleanup"><a class="header" href="#cleanup">Cleanup</a></h1>
+<p>This is the last chapter for this course and without further ado, we'll just clean up the resources.</p>
+<p>Make sure you're in the right subscription:</p>
+<pre><code class="language-shell">az account show
+</code></pre>
+<p>Change the subscription if needed with:</p>
+<pre><code class="language-shell">az account list
+</code></pre>
+<pre><code class="language-shell">az account set --subscription &lt;SUBSCRIPTION_ID&gt;
+</code></pre>
+<p>Drop it like it's hot (this might take a while):</p>
+<pre><code class="language-shell">az group delete --name rg-functions-demo --yes
+</code></pre>
+<p>That's it, well done!</p>
+<p>I hope you enjoyed the training.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+    </body>
+</html>

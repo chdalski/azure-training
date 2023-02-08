@@ -1,0 +1,255 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js rust">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Deploying your App to Azure - Azure Trainings</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="../favicon.svg">
+        <link rel="shortcut icon" href="../favicon.png">
+        <link rel="stylesheet" href="../css/variables.css">
+        <link rel="stylesheet" href="../css/general.css">
+        <link rel="stylesheet" href="../css/chrome.css">
+        <link rel="stylesheet" href="../css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="../FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="../fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="../highlight.css">
+        <link rel="stylesheet" href="../tomorrow-night.css">
+        <link rel="stylesheet" href="../ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="../src/css/custom.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "../";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "rust";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('rust')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="../index.html">Introduction</a></li><li class="chapter-item expanded affix "><li class="part-title">Trainings</li><li class="chapter-item expanded "><a href="../azure-functions/index.html"><strong aria-hidden="true">1.</strong> Azure Functions</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="../azure-functions/1-1-local-function-app.html"><strong aria-hidden="true">1.1.</strong> Local Function App</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-2-local-function.html"><strong aria-hidden="true">1.2.</strong> Local Function</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-3-azure-function-app.html"><strong aria-hidden="true">1.3.</strong> Azure Function App</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-4-deploying-local-to-azure.html" class="active"><strong aria-hidden="true">1.4.</strong> Deploying your App to Azure</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-5-working-with-app-settings.html"><strong aria-hidden="true">1.5.</strong> Working with App Settings</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-6-adding-health-checks.html"><strong aria-hidden="true">1.6.</strong> Adding health checks</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-7-working-with-logs.html"><strong aria-hidden="true">1.7.</strong> Working with Logs</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-8-basic-function-security.html"><strong aria-hidden="true">1.8.</strong> Basic Function Security</a></li><li class="chapter-item expanded "><a href="../azure-functions/1-9-cleanup.html"><strong aria-hidden="true">1.9.</strong> Cleanup</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Azure Trainings</h1>
+
+                    <div class="right-buttons">
+                        <a href="../print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/chdalski/azure-training/tree/main" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        <a href="https://github.com/chdalski/azure-training/edit/main/src/azure-functions/1-4-deploying-local-to-azure.md" title="Suggest an edit" aria-label="Suggest an edit">
+                            <i id="git-edit-button" class="fa fa-edit"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="deploying-your-app-to-azure"><a class="header" href="#deploying-your-app-to-azure">Deploying your App to Azure</a></h1>
+<h2 id="introduction"><a class="header" href="#introduction">Introduction</a></h2>
+<p>Now that we've created our Azure Resources, it's time to deploy our local Function App to its Azure counterpart.</p>
+<p>Commands in this chapter are to be executed in the <em>Function App</em> root directory unless stated otherwise.</p>
+<h2 id="deployment-best-practices"><a class="header" href="#deployment-best-practices">Deployment best practices</a></h2>
+<p>When deploying a Function App, it's important to keep in mind that the unit of deployment for functions in Azure is the Function App.
+Meaning, all functions are deployed at the same time, usually from the same <a href="https://learn.microsoft.com/en-us/azure/azure-functions/run-functions-from-deployment-package">deployment package</a>.</p>
+<p>Check out the <a href="https://learn.microsoft.com/en-us/azure/azure-functions/functions-best-practices?tabs=csharp#optimize-deployments">best practices documentation</a> for further insights.</p>
+<p>Also, think about if you have added new items to your Function App and if you need to update your <a href="./1-1-local-function-app.html#the-funcignore">.funcignore</a> before deploying.</p>
+<h2 id="deploying-the-function-app"><a class="header" href="#deploying-the-function-app">Deploying the Function App</a></h2>
+<p>Our Function App can be deployed with a single command.
+However, before we can execute it, we need to know the name of our Function App created by the Bicep template.</p>
+<p>Look up the name:</p>
+<pre><code class="language-shell">az resource list --resource-group rg-functions-demo --query &quot;[?kind=='functionapp,linux'].name&quot;
+</code></pre>
+<p>Afterwards deploy your Function App with:</p>
+<pre><code class="language-shell">func azure functionapp publish &lt;APP_NAME&gt;
+</code></pre>
+<details>
+  <summary>Sample output</summary>
+<pre><code class="language-text">Getting site publishing info...
+Creating archive for current directory...
+Uploading 427.34 KB [#############################################################################]
+Upload completed successfully.
+Deployment completed successfully.
+</code></pre>
+</details>
+<blockquote>
+<p>Note: This might take a minute or two depending on your compute resources and internet connection.</p>
+</blockquote>
+<h3 id="testing-your-deployment"><a class="header" href="#testing-your-deployment">Testing your deployment</a></h3>
+<p>After our deployment completed successfully, we'll now test if everything works as expected.</p>
+<p>Query the enabled host names for your Function App with:</p>
+<pre><code class="language-shell">az functionapp show --resource-group rg-functions-demo --name &lt;APP_NAME&gt; --query &quot;defaultHostName&quot;
+</code></pre>
+<p>As Azure Websites get a default custom Domain name, where the application name is the third level of the domain name followed by <code>.azurewebsites.net</code>.
+That is also true for Azure Functions as they are treated as Websites.
+Furthermore the domain has a valid wildcard certificate, so we can call our resources via <em>https</em>.</p>
+<p>From our local tests we also know that our functions are located in the <code>api</code> subdirectory followed by the function name.</p>
+<p>So, your URL should look like:</p>
+<pre><code class="language-text">https://&lt;APP_NAME&gt;.azurewebsites.net/api/greetings
+</code></pre>
+<blockquote>
+<p>Note: We don't need to specify a port, because the site listens on the default https port.</p>
+</blockquote>
+<h4 id="-task-optional-call-the-greetings-api"><a class="header" href="#-task-optional-call-the-greetings-api"><span class="task">🛠 TASK (optional):</span> Call the greetings API</a></h4>
+<p>Use the curl commands introduced in the chapter <a href="./1-2-local-function.html">Local Functions</a> or any other REST client to test the API.</p>
+<details>
+  <summary>💡 HINT</summary>
+<ul>
+<li>Look up the function name, as done above, and replace <code>&lt;function-app-name&gt;</code> in the url with it</li>
+<li>Make sure to use <strong>https</strong> instead of <em>http</em> for non-local calls</li>
+</ul>
+</details>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="../azure-functions/1-3-azure-function-app.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="../azure-functions/1-5-working-with-app-settings.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="../azure-functions/1-3-azure-function-app.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="../azure-functions/1-5-working-with-app-settings.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="../elasticlunr.min.js"></script>
+        <script src="../mark.min.js"></script>
+        <script src="../searcher.js"></script>
+
+        <script src="../clipboard.min.js"></script>
+        <script src="../highlight.js"></script>
+        <script src="../book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </body>
+</html>
