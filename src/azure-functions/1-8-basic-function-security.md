@@ -17,7 +17,7 @@ Unless the HTTP access level on an HTTP triggered function is set to anonymous, 
 They're good enough for trainings, demos, or development purposes but shouldn't be used in [production](https://learn.microsoft.com/en-us/azure/azure-functions/functions-bindings-http-webhook-trigger#secure-an-http-endpoint-in-production).
 
 Nevertheless they are the default security mechanisms Azure Functions provide and that's why we're learning about them.
-In fact, we already used Function Access keys back in [Chapter 2.5](./25-working-with-app-settings.md#use-app-settings-in-functions), were we created a function with authorization level `function`, and they're also the reason why we created most of our functions with authorization level `anonymous`.
+In fact, we already used Function Access keys back in [Chapter 2.5](./1-5-working-with-app-settings.md#use-app-settings-in-functions), were we created a function with authorization level `function`, and they're also the reason why we created most of our functions with authorization level `anonymous`.
 
 So, as you might have already guessed, authorization levels are coupled to access keys.
 

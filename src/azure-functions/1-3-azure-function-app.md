@@ -66,7 +66,7 @@ az group create --name rg-functions-demo --location westeurope
 
 > Note: It might take a while for the resources to show up in Azure Portal.
 
-## Create the demo resources
+## Creating the demo resources
 
 The resources will be created in the same location you used for the resource group.
 However, not all resources are available for every resource.

@@ -13,7 +13,7 @@ Commands in this chapter are to be executed in the _Function App_ root directory
 
 ## Fetch the settings from Azure
 
-We learned in chapter [2.1 Local Function App](./21-local-function-app.md#the-localsettingsjson) that our local Function App settings are stored in a file called _local.settings.json_.
+We learned in chapter [2.1 Local Function App](./1-1-local-function-app.md#the-localsettingsjson) that our local Function App settings are stored in a file called _local.settings.json_.
 When we created our local Function App, the file was added with the minimal set of entries the runtime needs to work properly.
 
 Take a look at your local settings first:
@@ -29,7 +29,7 @@ az functionapp config appsettings list --resource-group rg-functions-demo --name
 ```
 
 As you can see, there are already more settings in Azure, even if we just created the app and deployed it once.
-For example, the settings for [Application Insights](./23-azure-function-app.md#create-the-demo-resources) were automatically set when we created the resources via Bicep.
+For example, the settings for [Application Insights](./1-3-azure-function-app.md#creating-the-demo-resources) were automatically set when we created the resources via Bicep.
 
 To fetch the settings from Azure we can execute:
 
@@ -94,7 +94,7 @@ Don't use environment variables not configured in _local.settings.json_ in your 
 
 ### <span class="task">🛠 TASK (optional):</span> Deploy the Function App
 
-Deploy the function app like you did in the [previous chapter](./24-deploy-local-to-azure.md#deploy-the-function-app) and call the new settings endpoint.
+Deploy the function app like you did in the [previous chapter](./1-4-deploying-local-to-azure.md#deploying-the-function-app) and call the new settings endpoint.
 You'll see that you won't get any output, but instead a [401 Unauthorized](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/401) response.
 That's because we configured the authorization level to be _function_.
 

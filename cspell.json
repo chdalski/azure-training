@@ -16,6 +16,13 @@
     "runtimes",
     "westeurope"
   ],
-  "ignoreWords": ["ains", "JMES", "WEBSITE_HEALTHCHECK_MAXPINGFAILURES"],
+  "ignoreWords": [
+    "ains",
+    "chdalski",
+    "codecentric",
+    "Dalski",
+    "JMES",
+    "WEBSITE_HEALTHCHECK_MAXPINGFAILURES"
+  ],
   "import": []
 }

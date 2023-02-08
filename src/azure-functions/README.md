@@ -11,6 +11,6 @@ There are samples, but they will be limited to showcase certain scenarios.
 
 ## Prerequisites
 
-- Create an [Azure Account](https://portal.azure.com/) (as codecentric employee use [INFRA Requests](https://codecentric.slack.com/apps/A020LK1JCMS-infra-requests))
+- Create an [Azure Account](https://portal.azure.com/)
 - Install [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 - Install [Node.js 18](https://nodejs.org/) (the training will be in [TypeScript](https://www.typescriptlang.org/), but you can use [other languages](https://learn.microsoft.com/en-us/azure/azure-functions/supported-languages) if you like)

@@ -13,7 +13,7 @@ Meaning, all functions are deployed at the same time, usually from the same [dep
 
 Check out the [best practices documentation](https://learn.microsoft.com/en-us/azure/azure-functions/functions-best-practices?tabs=csharp#optimize-deployments) for further insights.
 
-Also, think about if you have added new items to your Function App and if you need to update your [.funcignore](./21-local-function-app.md#the-funcignore) before deploying.
+Also, think about if you have added new items to your Function App and if you need to update your [.funcignore](./1-1-local-function-app.md#the-funcignore) before deploying.
 
 ## Deploying the Function App
 
@@ -73,7 +73,7 @@ https://<APP_NAME>.azurewebsites.net/api/greetings
 
 #### <span class="task">🛠 TASK (optional):</span> Call the greetings API
 
-Use the curl commands introduced in the chapter [Local Functions](./21-local-function-app.md) or any other REST client to test the API.
+Use the curl commands introduced in the chapter [Local Functions](./1-2-local-function.md) or any other REST client to test the API.
 
 <details>
   <summary>💡 HINT</summary>

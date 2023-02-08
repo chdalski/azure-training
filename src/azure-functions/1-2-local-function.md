@@ -4,7 +4,7 @@
 
 In this chapter we will create a local function, look at its details and then start and call it.
 
-Make sure you have created a [Local Function App](./21-local-function-app.md).
+Make sure you have created a [Local Function App](./1-2-local-function.md).
 
 Commands in this chapter are to be executed in the _Function App_ root directory unless stated otherwise.
 

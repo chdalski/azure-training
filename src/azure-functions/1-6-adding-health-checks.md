@@ -31,7 +31,7 @@ As you have done before, create a new function called `health` with authorizatio
 <details>
   <summary>💡 HINT</summary>
 
-We already create a function like that [before](./22-local-function.md#add-a-function-to-our-function-app).
+We already create a function like that [before](./1-2-local-function.md#add-a-function-to-our-function-app).
 
 </details>
 <br/>
