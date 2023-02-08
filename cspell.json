@@ -1,8 +1,9 @@
 {
   "version": "0.2",
-  "ignorePaths": [],
+  "ignorePaths": ["book", ".github", "megalinter-reports"],
   "dictionaryDefinitions": [],
   "dictionaries": [],
+  "language": "en",
   "words": [
     "appservice",
     "appsettings",
@@ -16,6 +17,13 @@
     "runtimes",
     "westeurope"
   ],
-  "ignoreWords": ["ains", "JMES", "WEBSITE_HEALTHCHECK_MAXPINGFAILURES"],
+  "ignoreWords": [
+    "ains",
+    "chdalski",
+    "codecentric",
+    "Dalski",
+    "JMES",
+    "WEBSITE_HEALTHCHECK_MAXPINGFAILURES"
+  ],
   "import": []
 }

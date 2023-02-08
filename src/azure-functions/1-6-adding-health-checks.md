@@ -1,37 +1,37 @@
-# Add health checks
+# Adding health checks
 
 ## Introduction
 
 In this chapter we're going to add basic health check functionality to our Function App, which you can use to implement [Azure Service Health alerts](https://learn.microsoft.com/en-us/azure/service-health/resource-health-overview) (not part of this training).
 
 The hosting infrastructure for Azure Functions is provided by [Azure App Service](https://learn.microsoft.com/en-us/azure/app-service/overview).
-Therefore the documentation for [health checks](https://learn.microsoft.com/en-us/azure/app-service/monitor-instances-health-check) is found in the Azure App Service documentation, rather then for Azure Functions.
+Therefore the documentation for [health checks](https://learn.microsoft.com/en-us/azure/app-service/monitor-instances-health-check) is found in the Azure App Service documentation rather then for Azure Functions.
 
-The Health Check feature can be used to monitor Function Apps on the Premium (Elastic Premium) and Dedicated (App Service) plans, only.
-It's not an option for the Consumption plan, however, as the runtime for these Function App is only available when function are called.
+The Health Check feature can be used to monitor Function Apps on the Premium (Elastic Premium) and Dedicated (App Service) plans only.
+It's not an option for the Consumption plan, however, as the runtime for these Function Apps is only available when functions are called.
 
-Commands in this chapter are to be executed in the _Function App_ root directory if not stated otherwise.
+Commands in this chapter are to be executed in the _Function App_ root directory unless stated otherwise.
 
-## Create a health check endpoint
+## Creating a health check endpoint
 
-Reading the [documentation](https://learn.microsoft.com/en-us/azure/app-service/monitor-instances-health-check#what-app-service-does-with-health-checks) we learn that creating an health check endpoint is rather simple.
+Reading the [documentation](https://learn.microsoft.com/en-us/azure/app-service/monitor-instances-health-check#what-app-service-does-with-health-checks), we learn that creating an health check endpoint is rather simple.
 
 - our Function App needs an endpoint that returns HTTP status code 200 if everything is fine and 500 otherwise
 - the default path for that endpoint is called _health_
 
-We also learn, that health checks are usually used as an interface to probe other services our Function App depends on, like databases and so on.
+We also learn that health checks are usually used as an interface to probe other services our Function App depends on, like databases and so on.
 As we have no database available we need to substitute it.
 
 But let's take one step at a time.
 
 ### <span class="task">🛠 TASK:</span> Create the endpoint
 
-As you have done before create a new function called `health` with authorization level `anonymous`.
+As you have done before, create a new function called `health` with authorization level `anonymous`.
 
 <details>
   <summary>💡 HINT</summary>
 
-We already create a function like that [before](./22-local-function.md#add-a-function-to-our-function-app).
+We already create a function like that [before](./1-2-local-function.md#add-a-function-to-our-function-app).
 
 </details>
 <br/>
@@ -74,7 +74,7 @@ Let's deploy the Function App before we continue.
 <details>
   <summary>🎓 SOLUTION</summary>
 
-Lookup the name:
+Look up the name:
 
 ```shell
 az resource list --resource-group rg-functions-demo --query "[?kind=='functionapp,linux'].name"
@@ -90,7 +90,7 @@ func azure functionapp publish <APP_NAME>
 
 ### <span class="task">🛠 TASK:</span> Update the health check settings
 
-Azure Functions won't automatically probe the health endpoint just because there`s an implementation.
+Azure Functions won't automatically probe the health endpoint just because there's an implementation.
 So we need to update our Function App in order to make use of it.
 
 Update the health check settings with:
@@ -101,12 +101,11 @@ az webapp config set --resource-group rg-functions-demo --name <APP_NAME> --gene
 
 > Note: In a real world scenario we wouldn't execute the command like that.
 > Instead we would update our IaC template (bicep, terraform, you name it).
-> However, you might have changed your Function App because you tested something or you're using and alternate language and updated the template and we might end up breaking your Function App if we would use an updated template - that's why we don't.
+> However, you might have changed your Function App because you tested something or you're using an alternate language and updated the template and we might end up breaking your Function App if we would use an updated template – that's why we don't.
 
 ### <span class="task">🛠 TASK (optional):</span> Monitor the health check status
 
-Before you can start monitoring the health check status of your Function App you need to take a little break.
-That's because it take a while before any metric is available.
+Before you can start monitoring the health check status of your Function App, you should take a little break, because it'll take a while before any metric is available.
 
 So wait for at least 5 Minutes before you execute:
 
@@ -119,7 +118,7 @@ az monitor metrics list --resource-group rg-functions-demo --resource-type "Micr
 
 The Average column might be empty if no metric was recorded before.
 
-```
+```text
 Timestamp            Name                 Average
 -------------------  -------------------  ---------
 2023-01-31 11:17:00  Health check status
@@ -140,21 +139,21 @@ Timestamp            Name                 Average
 
 > Note: The output from the monitor command depends on the interval and the execution time.
 > So depending on what interval you choose and what time you execute it you might get different results.
-> If you want results based on a specific start time you can set the --start-time parameter.
+> If you want results based on a specific start time, you can set the `--start-time` parameter.
 > Take a look at the [az monitor metrics](https://learn.microsoft.com/en-us/cli/azure/monitor/metrics?view=azure-cli-latest#az-monitor-metrics-list) documentation for further options.
 
 ### <span class="task">🛠 TASK:</span> Prepare the unhappy path
 
-As already mentioned we have no database or other alternate service available which we could use to test our health check against.
+As already mentioned, we don't have any database or other alternate service available which we could use to test our health check against.
 
-So we`re going to implement a function that allows us to toggle an environment variable to either true or false.
-Afterwards we can use that environment variable in our health check to toggle it's state.
+So we're going to implement a function that allows us to toggle an environment variable to either true or false.
+Afterwards we can use that environment variable in our health check to toggle its state.
 
 Create a function called `toggles` and implement it with the following traits:
 
-- the api expects either the _query_ or the _body_ to contain a variable called `toggle`
+- the API expects either the _query_ or the _body_ to contain a variable called `toggle`
 - create a switch for that toggle
-- the switch either knows the toggle and toggles it's value or it returns a HTTP status code 400
+- the switch either knows the toggle and toggles its value or it returns an HTTP status code 400
 - the toggle for the health state is called `isHealthy` and will toggle an environment variable called `TOGGLE_IS_HEALTHY`
 - valid values for the environment variable are `"true"` or `"false"`
 - if the environment variable is not undefined, default to `"false"`
@@ -208,7 +207,7 @@ const httpTrigger: AzureFunction = async function (
 
 ### <span class="task">🛠 TASK:</span> Update the health check function
 
-Now that we can toggle our environment variable using a simple api called, it's time to use that variable in our health check function.
+Now that we can toggle our environment variable using a simple API called, it's time to use that variable in our health check function.
 
 Update the function to respond with HTTP status code 500 if `process.env.TOGGLE_IS_HEALTHY` is `"false"`, otherwise respond with HTTP status code 200.
 
@@ -234,17 +233,17 @@ const httpTrigger: AzureFunction = async function (
 ### <span class="task">🛠 TASK (optional):</span> Deploy, Toggle and Monitor the health status
 
 You can now deploy your Function App as well as toggle and monitor the health status.
-Remember though, it might take a while till the status is available.
+Remember, though, it might take a while till the status is available.
 
 You can also use [Azure Service Health alerts](https://learn.microsoft.com/en-us/azure/service-health/resource-health-overview) to monitor your Function App in Azure Portal.
-As this is not part of our training remember to clean up afterwards.
+As this is not part of our training, remember to clean up afterwards.
 
-> Note: Toggle the health state back to `"true"` when you`re done or Azure will try to restart your Function after a while.
+> Note: Toggle the health state back to `"true"` when you're done or Azure will try to restart your Function after a while.
 
 ## <span class="quiz">Quiz</span>
 
 <details>
-  <summary>What's the application setting `WEBSITE_HEALTHCHECK_MAXPINGFAILURES` used for and what's it's default value (hint: App Service documentation)?</summary>
+  <summary>What's the application setting <span class="italic">WEBSITE_HEALTHCHECK_MAXPINGFAILURES</span> used for and what's its default value (hint: App Service documentation)?</summary>
 
 The default value is **10** and it's used to determine how many failed requests to the health check endpoint are valid, before the service is deemed unhealthy.
 

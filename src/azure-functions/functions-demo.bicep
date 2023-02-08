@@ -28,7 +28,7 @@ param functionRuntime string = 'node'
 // @description('The node default version of the Function App (Windows only)')
 // param nodeDefaultVersion string = '~18'
 
-// use "az functionapp list-runtimes --os linux --query "[].{stack:join(' ', [runtime, version]), LinuxFxVersion:linux_fx_version, SupportedFunctionsVersions:to_string(supported_functions_versions[])}" --output table" on the command line to list availabe options
+// use "az functionapp list-runtimes --os linux --query "[].{stack:join(' ', [runtime, version]), LinuxFxVersion:linux_fx_version, SupportedFunctionsVersions:to_string(supported_functions_versions[])}" --output table" on the command line to list available options
 @description('The linuxFxVersion of the Function App (Linux only)')
 param linuxFxVersion string = 'Node|18'
 
@@ -38,6 +38,10 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-09-01' = {
   name: storageAccountName
   sku: {
     name: storageAccountType
+  }
+  properties: {
+    minimumTlsVersion: 'TLS1_2'
+    supportsHttpsTrafficOnly: true
   }
 }
 
