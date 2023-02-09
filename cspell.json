@@ -19,10 +19,19 @@
   ],
   "ignoreWords": [
     "ains",
+    "APPINSIGHTS",
+    "apsp",
     "chdalski",
     "codecentric",
+    "CONTENTAZUREFILECONNECTIONSTRING",
     "Dalski",
+    "GZRS",
+    "INSTRUMENTATIONKEY",
     "JMES",
+    "RAGRS",
+    "RAGZRS",
+    "stfademo",
+    "serverfarms",
     "WEBSITE_HEALTHCHECK_MAXPINGFAILURES"
   ],
   "import": []

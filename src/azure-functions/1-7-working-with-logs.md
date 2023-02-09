@@ -2,7 +2,11 @@
 
 ## Introduction
 
-When it comes to logging, sadly an often undervalued topic, Azure Function Apps have quite a broad scope of different mechanisms available, including [Streaming Logs](https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#streaming-logs), [Diagnostic Logs](https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#diagnostic-logs), [Scale controller logs](https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#scale-controller-logs) and [Azure Monitor metrics](https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#azure-monitor-metrics).
+When it comes to logging, sadly an often undervalued topic, Azure Function Apps have quite a broad scope of different mechanisms available, including
+[Streaming Logs](https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#streaming-logs),
+[Diagnostic Logs](https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#diagnostic-logs),
+[Scale controller logs](https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#scale-controller-logs) and
+[Azure Monitor metrics](https://learn.microsoft.com/en-us/azure/azure-functions/functions-monitoring#azure-monitor-metrics).
 
 In the last chapter we were already using Azure Monitor metrics to query information about the health check status.
 
